@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+latex/*.aux
+latex/*.bbl
+latex/*.blg
+latex/*.log
+latex/*.out
+latex/*.toc
+latex/report.pdf
+.openai/
