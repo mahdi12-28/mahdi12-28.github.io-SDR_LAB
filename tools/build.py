@@ -45,6 +45,7 @@ def gallery():
     return '<p>هر ۱۷ تصویر با نام و محتوای اصلی نگه داشته شده‌اند. روی تصویر بزنید تا نسخهٔ کامل باز شود.</p><div class="gallery-tools"><div class="filters" role="group" aria-label="فیلتر تصاویر">'+filters+'</div><span id="gallery-count" class="small text-muted" aria-live="polite">۱۷ تصویر</span></div><div class="gallery">'+''.join(html_figure({'file':f,'caption':c},group=g) for f,g,c in PHOTOS)+'</div>'
 def downloads(lab,kind,doc):
     files=[(f'downloads/{pdf_name(lab,kind)}.pdf','گزارش PDF','ساخته‌شده با LaTeX'),(f'downloads/{source_name(lab,kind)}.zip','منبع LaTeX و تصاویر','قابل بازبینی و کامپایل'),(f'latex/{stem(lab,kind)}.tex','فایل TEX','منبع همین گزارش'),('latex/references.bib','مراجع BibTeX','مراجع مشترک')]
+    if doc.get('attachments_only'):files=[]
     if lab['id']=='lab00':files += [('code/pluto_receive_template.py','قالب دریافت پایتون','بازنویسی آموزشی؛ فایل اصلی جلسه نیست'),('code/matlab_receive_template.m','قالب دریافت MATLAB','بازنویسی آموزشی؛ فایل اصلی جلسه نیست'),('data/README.md','وضعیت دادهٔ خام','دادهٔ I/Q در ورودی موجود نبود'),('flowgraphs/README.md','وضعیت فلوگراف','فایل اصلی GRC در ورودی موجود نبود')]
     files += [(a['path'],a['title'],a.get('description','فایل همراه')) for a in doc.get('attachments',[])]
     return '<div class="files">'+''.join(f'<a class="file" href="../../../{esc(p)}"><b>{esc(t)} ↙</b><small>{esc(d)}</small></a>' for p,t,d in files)+'</div>'
@@ -67,6 +68,9 @@ def html_document(lab,kind,doc):
             elif t=='references':blocks.append('<ol class="source-list">'+''.join('<li>'+inline(r)+'</li>' for r in doc.get('references',REFS))+'</ol>')
             else:raise ValueError('Unknown block type: '+t)
         parts.append(f'<section class="report-section" id="{esc(sec["id"])}"><span class="section-index">{i:02} / {lab["id"].upper()}</span><h2>{esc(sec["title"])}</h2>'+''.join(blocks)+'</section>')
+    if doc.get('attachments_only'):
+        body='<main id="main" class="wrap section"><h1>'+esc(doc['title'])+'</h1>'+''.join(parts)+'<a class="top-link" href="../../../index.html#experiments">بازگشت به فهرست آزمایش‌ها ←</a></main>'
+        return shell(doc['title'],body,'../../../')
     name='پیش‌گزارش' if kind=='pre' else 'گزارش پس از جلسه';rec=lab[kind]
     note='<div class="note neutral"><p>'+inline(doc['document_note'])+'</p></div>' if doc.get('document_note') else ''
     toc=''.join('<a href="#'+esc(s['id'])+'">'+esc(s['title'])+'</a>' for s in doc['sections'])
@@ -162,7 +166,9 @@ def build():
                 continue
             doc=read(f'content/{lab["id"]}/{kind}.json')
             if not any(b['type'] in ['paragraph','bullets','code','equation','table','figure'] for sec in doc['sections'] for b in sec.get('blocks',[])):raise ValueError('Cannot include a report with no substantive content')
-            write(dest,html_document(lab,kind,doc));write('latex/'+stem(lab,kind)+'.tex',latex_document(lab,kind,doc))
+            write(dest,html_document(lab,kind,doc))
+            if doc.get('attachments_only'):continue
+            write('latex/'+stem(lab,kind)+'.tex',latex_document(lab,kind,doc))
             generated.append({'lab':lab['id'],'kind':kind,'tex':stem(lab,kind),'pdf':pdf_name(lab,kind),'source_zip':source_name(lab,kind)})
     write('index.html',homepage());write('content/generated.json',json.dumps(generated,ensure_ascii=False,indent=2))
     write('assets/js/config.js','window.LAB_GISCUS = '+json.dumps(SITE['giscus'],ensure_ascii=False,indent=2)+';\n')
