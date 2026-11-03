@@ -5,7 +5,32 @@
     "title": "راه‌اندازی محیط و نصب نرم‌افزارها",
     "subtitle": "Environment and Toolchain Setup",
     "session_date": "در مدارک جلسه ثبت نشده",
-    "pre": {"publish": false, "status": "پیش‌گزارش جداگانه موجود نیست", "date": "ثبت نشده"},
-    "post": {"publish": true, "status": "گزارش مستندات موجود", "date": "زمان تحویل در فرم درس ثبت نشده"}
+    "pre": {
+      "publish": false,
+      "status": "پیش‌گزارش جداگانه موجود نیست",
+      "date": "ثبت نشده"
+    },
+    "post": {
+      "publish": true,
+      "status": "گزارش مستندات موجود",
+      "date": "زمان تحویل در فرم درس ثبت نشده"
+    }
+  },
+  {
+    "id": "lab01",
+    "number": 1,
+    "title": "پیش‌گزارش آزمایش اول",
+    "subtitle": "",
+    "session_date": "ثبت نشده",
+    "pre": {
+      "publish": true,
+      "status": "پیش‌گزارش",
+      "date": "ثبت نشده"
+    },
+    "post": {
+      "publish": false,
+      "status": "گزارش ارائه نشده",
+      "date": "ثبت نشده"
+    }
   }
 ]
