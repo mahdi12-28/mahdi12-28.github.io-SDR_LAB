@@ -97,8 +97,8 @@ PREAMBLE=r'''\documentclass[10pt,a4paper]{article}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage[numbers]{natbib}
-\setmainfont[Path=../assets/fonts/,BoldFont=DejaVuSans-Bold.ttf,ItalicFont=DejaVuSans.ttf,Script=Arabic,Language=Persian]{DejaVuSans.ttf}
-\newfontfamily\latinfont[Path=../assets/fonts/,BoldFont=DejaVuSans-Bold.ttf]{DejaVuSans.ttf}
+\setmainfont[Path=../assets/fonts/,BoldFont=Estedad-Bold.ttf,ItalicFont=Estedad-Medium.ttf,Script=Arabic,Language=Persian]{Estedad-Medium.ttf}
+\newfontfamily\latinfont[Path=../assets/fonts/,BoldFont=Estedad-Bold.ttf]{Estedad-Medium.ttf}
 \TeXXeTstate=1
 \newcommand{\rtl}[1]{\beginR #1\endR}
 \newcommand{\lr}[1]{\beginL{\latinfont #1}\endL}

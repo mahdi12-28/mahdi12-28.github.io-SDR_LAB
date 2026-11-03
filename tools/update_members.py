@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """Enter the two names and IDs once; refresh every HTML/PDF afterward."""
 from pathlib import Path
 import json
