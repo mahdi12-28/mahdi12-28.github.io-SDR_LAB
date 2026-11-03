@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-"""Bundle the current LaTeX source; run after build.py / build-pdf.sh."""
+"""Package one self-contained LaTeX source archive per included report."""
 from pathlib import Path
+import json
 import zipfile
-R=Path(__file__).resolve().parents[1]
-with zipfile.ZipFile(R/'downloads/lab00-latex-source.zip','w',zipfile.ZIP_DEFLATED) as z:
-    for folder in ['latex','assets/images','assets/fonts']:
-        for p in sorted((R/folder).rglob('*')):
-            if p.is_file() and (p.suffix in ['.tex','.bib','.png','.ttf','.txt']):
-                z.write(p,p.relative_to(R))
-    z.write(R/'tools/build-pdf.sh','tools/build-pdf.sh')
-    z.writestr('README.txt','Run bash tools/build-pdf.sh from a full TeX Live environment. The bundled font is DejaVu Sans. This draft requires student-authored analysis and conclusion. See the main site README for completion requirements.\n')
-print('Built downloads/lab00-latex-source.zip')
+ROOT=Path(__file__).resolve().parents[1]
+for r in json.loads((ROOT/'content/generated.json').read_text(encoding='utf-8')):
+    target=ROOT/'downloads'/(r['source_zip']+'.zip')
+    with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as z:
+        source=(ROOT/'latex'/(r['tex']+'.tex')).read_text(encoding='utf-8').replace('../assets/','assets/')
+        z.writestr('report.tex',source)
+        z.write(ROOT/'latex/references.bib','references.bib')
+        # Include all local images and fonts so figure paths remain exact.
+        for p in sorted((ROOT/'assets').rglob('*')):
+            if p.is_file() and p.suffix.lower() in ['.png','.jpg','.jpeg','.webp','.ttf','.otf','.txt']:
+                z.write(p,p.relative_to(ROOT))
+        z.writestr('README.txt','From this directory run:\nxelatex report.tex\nbibtex report\nxelatex report.tex\nxelatex report.tex\nCompiler: XeLaTeX. A full TeX Live/MiKTeX distribution is required. For Overleaf, select report.tex as the main document and XeLaTeX as compiler.\n')
+    print('Built '+str(target.relative_to(ROOT)))

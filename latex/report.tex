@@ -1,11 +1,6 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[margin=22mm,headheight=14pt]{geometry}
-\usepackage{fontspec}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{titlesec}
-\usepackage{amsmath}
-\usepackage{xcolor}
+\usepackage[margin=21mm,headheight=14pt]{geometry}
+\usepackage{fontspec,graphicx,float,amsmath,xcolor,titlesec,needspace}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage[numbers]{natbib}
@@ -18,166 +13,222 @@
 \renewcommand{\figurename}{\rtl{شکل}}
 \renewcommand{\tablename}{\rtl{جدول}}
 \renewcommand{\refname}{\rtl{مراجع}}
-\renewcommand{\contentsname}{\rtl{فهرست مطالب}}
-\hypersetup{hidelinks,pdftitle={Lab 00 - Draft report},pdfauthor={SDR Lab Team}}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{8pt}
-\linespread{1.35}
+\hypersetup{hidelinks,pdftitle={SDR Laboratory Report},pdfauthor={SDR Lab Team}}
+\pdfstringdefDisableCommands{\def\rtl#1{#1}\def\lr#1{#1}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{7pt}
+\linespread{1.32}
 \titleformat{\section}{\large\bfseries\raggedleft}{\thesection}{1em}{}
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[R]{\small\rtl{آزمایش صفر | راه‌اندازی محیط}}
-\fancyhead[L]{\small\lr{SDR LAB}}
-\fancyfoot[C]{\thepage}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\lr{SDR LAB}}\fancyfoot[C]{\thepage}
 \begin{document}
-\begin{titlepage}
-\vspace*{15mm}
-\begin{center}
-{\color{teal}\Large\lr{SDR LAB / 00}}\\[12mm]
-{\Huge\bfseries\rtl{گزارش آزمایش صفر}}\\[7mm]
-{\Large\rtl{راه‌اندازی محیط و نصب نرم‌افزارها}}\\[4mm]
-{\large\lr{Environment and Toolchain Setup}}\\[15mm]
-\rtl{نام تیم را وارد کنید}\\[6mm]
-\rtl{نام و شمارهٔ دانشجویی عضو اول}\\[3mm]
-\rtl{نام و شمارهٔ دانشجویی عضو دوم}\\[3mm]
-\vspace{8mm}
-\rtl{مدرس: دکتر سید محمد کرباسی}\\[3mm]
-\rtl{نیمسال اول ۱۴۰۵–۱۴۰۶}\\[5mm]
-\rtl{تاریخ جلسه: ثبت نشده}\\[3mm]
-\rtl{تاریخ تحویل: ثبت نشده}\\[12mm]
-\fbox{\parbox{0.85\linewidth}{\rp{\textbf{پیش‌نویس؛ نیازمند تکمیل توسط تیم}\par این نسخه برای تحویل نهایی کامل نیست. تحلیل، نتیجه‌گیری و مدارک باقی‌مانده باید توسط اعضای تیم تکمیل شوند.}}}
-\end{center}\end{titlepage}
-\section{\rtl{هدف و مستندات گزارش}}
-\rp{هدف آزمایش صفر، آماده‌سازی محیط نرم‌افزاری درس و ثبت آزمون اتصال در چهار مسیر مستقل است. این نسخه، تنظیمات قابل‌خواندن از تصاویر ارسالی را گردآوری می‌کند. تحلیل و نتیجه‌گیری در این پیش‌نویس نوشته نشده‌اند.}
+\fancyhead[R]{\small\rtl{آزمایش ۰ | گزارش پس از جلسه}}
+\begin{titlepage}\begin{center}\vspace*{12mm}
+{\color{teal}\Large\lr{LAB00 / POST}}\\[12mm]
+{\LARGE\bfseries\rtl{راه‌اندازی محیط و نصب نرم‌افزارها}}\\[9mm]
+\rtl{گروه آزمایشگاه SDR}\\[4mm]
+\rtl{دکتر سید محمد کرباسی}\\[4mm]
+\rtl{نیمسال اول ۱۴۰۵–۱۴۰۶}\\[4mm]
+\vspace{10mm}
+\rtl{عضو ۱؛ نام و نام خانوادگی: \rule{45mm}{0.3pt}}\\[5mm]
+\rtl{شمارهٔ دانشجویی: \rule{35mm}{0.3pt}}\\[9mm]
+\rtl{عضو ۲؛ نام و نام خانوادگی: \rule{45mm}{0.3pt}}\\[5mm]
+\rtl{شمارهٔ دانشجویی: \rule{35mm}{0.3pt}}\\[9mm]
+\rtl{تاریخ جلسه: در مدارک جلسه ثبت نشده}\\[4mm]
+\rtl{تحویل: زمان تحویل در فرم درس ثبت نشده}\\[8mm]
+\end{center}
+\begin{quote}\rp{این گزارش بر پایهٔ مدارک موجود نوشته شده است. وضعیت «گزارش موجود» به معنی تأیید کامل همهٔ معیارهای آزمایش یا ثبت تحویل در فرم درس نیست. نبود اطلاعات، صریح ثبت شده و هیچ نتیجهٔ آزمایشگاهی فرض نشده است.}
 
-\rp{معیارهای ثبت از دستورکار \citep{labmanual} و الزامات مستندسازی از آیین‌نامهٔ درس \citep{regulations} استخراج شده‌اند. تصاویر، رابط نرم‌افزارها را مستند می‌کنند و جایگزین دادهٔ خام نیستند.}
-\rp{برای نمادگذاری فایل خام، هر نمونهٔ مختلط از دو مؤلفهٔ هم‌فاز و متعامد تشکیل می‌شود. رابطهٔ زیر تعریف نمادگذاری است و نتیجهٔ اندازه‌گیری نیست.}
+\end{quote}
+\end{titlepage}
+\Needspace{6\baselineskip}
+\section{\rtl{هدف، دامنه و شیوهٔ ثبت گزارش}}
+\rp{آزمایش صفر برای آماده‌کردن محیط نرم‌افزاری درس پیش از ورود به آزمایش‌های اصلی طراحی شده است. در دستورکار، چهار مسیر مستقل در نظر گرفته شده‌اند: MATLAB، ابزارهای ویندوز، GNU Radio روی اوبونتو و پایتون. نقطهٔ مشترک این مسیرها، اتصال به رادیو از راه شبکه و دریافت نمونه‌های واقعی است [۱، ص. ۱–۴].}
 
-\begin{equation} x[n] = I[n] + jQ[n] \end{equation}
-\section{\rtl{شبکه و آزمون اتصال}}
-\rp{شکل \ref{fig:ping} خروجی آزمون شبکه را نشان می‌دهد. مقادیر جدول \ref{tab:network} از همین تصویر رونویسی شده‌اند.}
-\begin{table}[H]\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|p{0.55\linewidth}|p{0.32\linewidth}|}\hline
+\rp{مدارک این گزارش شامل ۱۷ تصویر رابط نرم‌افزار است. اطلاعات نسخه‌ها، تنظیمات قابل‌خواندن و خروجی‌های ترمینال از همین تصاویر ثبت شده‌اند. توضیح مراحل آماده‌سازی بر اساس دستورکار آمده است؛ شرح یک مرحله در متن، به‌تنهایی ادعای اجرای آن در جلسه نیست.}
+
+\rp{فایل خام I/Q، فلوگراف اصلی، خروجی کامل مشخصات دستگاه و مدرک مسیر اوبونتو در مجموعهٔ ارسالی وجود ندارند. بنابراین گزارش، وجود این مدارک یا موفقیت آزمون‌های مستندنشده را تأیید نمی‌کند. برای تاریخ جلسه نیز از زمان فایل‌ها یا ساعت نمایش‌داده‌شده در سیستم به‌جای تاریخ تأییدشدهٔ جلسه استفاده نشده است.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{مبانی و معماری ارتباط نرم‌افزار با دستگاه}}
+\rp{در چیدمان تعیین‌شده برای این آزمایشگاه، کابل USB برق دستگاه را تأمین می‌کند و کابل LAN مسیر داده و فرمان است. نشانی دستگاه \lr{192.168.1.10} و نشانی پیشنهادی کارت شبکهٔ لپ‌تاپ \lr{192.168.1.20} است. همهٔ محیط‌ها از نشانی اتصال \lr{ip:192.168.1.10} استفاده می‌کنند [۱، ص. ۲–۳].}
+
+\rp{کتابخانهٔ libiio لایهٔ ارتباط با دستگاه است. بستهٔ pyadi-iio در پایتون و بلوک‌های gr-iio در GNU Radio، مسیر دسترسی نرم‌افزار به این لایه را فراهم می‌کنند. به همین دلیل، نصب یک رابط پایتونی به‌تنهایی جای کتابخانهٔ بومی ارتباط با سخت‌افزار را نمی‌گیرد [۱، ص. ۳ و ۱۰].}
+
+\rp{نمونهٔ باندپایه به‌صورت مختلط نمایش داده می‌شود. مؤلفهٔ I بخش هم‌فاز و مؤلفهٔ Q بخش متعامد است. رابطهٔ (۱) فقط تعریف نمادگذاری نمونه‌هاست و نتیجهٔ اندازه‌گیری این جلسه نیست.}
+
+\begin{equation}x[n] = I[n] + j Q[n]\label{eq:iq}\end{equation}
+\rp{فرکانس مرکزی، نرخ نمونه‌برداری و پهنای باند RF سه تنظیم جداگانه‌اند. در آزمون دریافت دستورکار، مقادیر آن‌ها به‌ترتیب ۹۴۵ مگاهرتز، ۲٫۶ مگاسمپل‌برثانیه و ۲ مگاهرتز است. در گزارش حاضر، مقدار تنظیم‌شده در کد با نتیجهٔ مستقل اندازه‌گیری آن یکسان فرض نشده است [۱، ص. ۶–۱۰].}
+
+\Needspace{6\baselineskip}
+\section{\rtl{آماده‌سازی شبکه و آزمون ping}}
+\rp{طبق دستورکار، پس از اتصال LAN و روشن‌شدن دستگاه، IPv4 کارت شبکهٔ سیمی در همان زیرشبکه تنظیم می‌شود. برای کارت سیمی، ماسک \lr{255.255.255.0} و خانه‌های خالی Gateway و DNS در نظر گرفته شده است تا اتصال Wi-Fi لپ‌تاپ بی‌دلیل تغییر نکند [۱، ص. ۳].}
+
+\begin{quote}\begin{flushleft}\small
+\lr{ping 192.168.1.10}\\
+\end{flushleft}\end{quote}
+\rp{در تصویر ثبت‌شده، چهار پاسخ از نشانی دستگاه دیده می‌شود. مقادیر جدول زیر عیناً از بخش آمار همان تصویر رونویسی شده‌اند. تصویر تنظیم IPv4 کارت شبکه در آرشیو نیست؛ مقدار خواسته‌شده در دستورکار به‌جای مقدار واقعاً ثبت‌شده وارد نشده است.}
+
+\rp{جدول \ref{tab:network} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.445\linewidth}|p{0.445\linewidth}|}\hline
+\rtl{\textbf{مقدار ثبت‌شده}} & \rtl{\textbf{مورد}} \\ \hline
 \rtl{\lr{192.168.1.10}} & \rtl{نشانی مقصد} \\ \hline
-\rtl{\lr{4 / 4 / 0}} & \rtl{ارسال / دریافت / اتلاف بسته} \\ \hline
+\rtl{\lr{4 / 4 / 0}} & \rtl{بستهٔ ارسال‌شده / دریافت‌شده / ازدست‌رفته} \\ \hline
+\rtl{\lr{0\%}} & \rtl{درصد اتلاف بسته} \\ \hline
 \rtl{\lr{1 / 2 / 1 ms}} & \rtl{کمینه / بیشینه / میانگین پاسخ} \\ \hline
-\rtl{نیازمند تصویر تنظیم کارت شبکه} & \rtl{نشانی کارت شبکه} \\ \hline
-\end{tabular}
-\caption{\rtl{ثبت اطلاعات شبکه}}\label{tab:network}\end{table}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/pingingSDR.png}
-\caption{\rtl{خروجی ثبت‌شدهٔ آزمون شبکه}}\label{fig:ping}
-\end{figure}
-\clearpage
-\section{\rtl{مسیر الف؛ MATLAB}}
-\rp{شکل \ref{fig:matlab} کد دریافت و پنجرهٔ تحلیل‌گر را نشان می‌دهد. تنظیمات خوانده‌شده در جدول \ref{tab:matlab} ثبت شده‌اند.}
-\begin{table}[H]\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|p{0.55\linewidth}|p{0.32\linewidth}|}\hline
-\rtl{\lr{ip:192.168.1.10}} & \rtl{نشانی اتصال} \\ \hline
-\rtl{\lr{945 MHz}} & \rtl{فرکانس مرکزی} \\ \hline
-\rtl{\lr{2.6 MS/s}} & \rtl{نرخ نمونه‌برداری} \\ \hline
-\rtl{\lr{Manual / 20 dB}} & \rtl{حالت و بهرهٔ گیرنده} \\ \hline
-\rtl{\lr{4096}} & \rtl{نمونه در هر فریم} \\ \hline
-\rtl{ثبت نشده} & \rtl{نسخهٔ MATLAB} \\ \hline
-\rtl{ثبت نشده} & \rtl{سریال دستگاه} \\ \hline
-\rtl{ثبت نشده} & \rtl{سفت‌افزار} \\ \hline
-\rtl{ثبت نشده} & \rtl{بازهٔ فعال} \\ \hline
-\end{tabular}
-\caption{\rtl{تنظیمات MATLAB و فیلدهای تکمیلی}}\label{tab:matlab}\end{table}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/MATLAB1.png}
-\caption{\rtl{محیط MATLAB و اجرای کد دریافت}}\label{fig:matlab}
-\end{figure}
-\clearpage
-\section{\rtl{مسیر ب؛ GNU Radio و نرم‌افزارهای ویندوز}}
-\rp{نسخهٔ محیط در شکل \ref{fig:gnu} و پنجرهٔ طیف در شکل \ref{fig:grspec} مستند شده‌اند. فایل اصلی فلوگراف در ورودی موجود نبود. جدول \ref{tab:windows} اطلاعات قابل‌خواندن را ثبت می‌کند.}
-\begin{table}[H]\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|p{0.55\linewidth}|p{0.32\linewidth}|}\hline
-\rtl{\lr{3.10.12.0}} & \rtl{نسخهٔ GNU Radio} \\ \hline
-\rtl{\lr{3.12.9}} & \rtl{نسخهٔ Python همراه} \\ \hline
-\rtl{\lr{SDR++ 1.3.2 / SDRangel 8.0.0}} & \rtl{نرم‌افزارهای آماده} \\ \hline
-\rtl{\lr{96 MHz}} & \rtl{فرکانس نمایشی در SDRpp\_2} \\ \hline
-\rtl{\lr{45 dB}} & \rtl{بهره در SDRpp\_2} \\ \hline
-\rtl{\lr{(usb)}} & \rtl{مسیر نمایش‌داده‌شده در SDRpp\_2} \\ \hline
-\rtl{\lr{90 MHz}} & \rtl{فرکانس در SDR\_angle1} \\ \hline
-\end{tabular}
-\caption{\rtl{ثبت اطلاعات مسیر ویندوز}}\label{tab:windows}\end{table}
-\rp{دستورکار، فرکانس ۹۴۵ مگاهرتز و بهرهٔ دستی حداکثر ۳۰ دسی‌بل با آنتن را تعیین می‌کند. توضیح انتخاب تنظیمات ثبت‌شده و پاسخ به معیار پذیرش، در بخش تحلیل توسط تیم تکمیل می‌شود.}
+\rtl{در مدارک موجود ثبت نشده} & \rtl{IPv4 واقعی کارت شبکهٔ لپ‌تاپ} \\ \hline
+\end{tabular}\caption{\rtl{اطلاعات ثبت‌شدهٔ شبکه و خروجی ping}}\label{tab:network}\end{table}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:ping} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/pingingSDR.png}\caption{\rtl{خروجی ping در ویندوز؛ مرجع مقادیر جدول شبکه}}\label{fig:ping}\end{figure}
+\rp{آزمون ping پاسخ‌گویی شبکه را بررسی می‌کند. در مراحل بعد، هر نرم‌افزار باید جداگانه دستگاه را باز کند و نمونه دریافت کند؛ آزمون شبکه جای ثبت خروجی نرم‌افزار و دادهٔ دریافتی را نمی‌گیرد [۱، ص. ۳].}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.17\textheight,keepaspectratio]{../assets/images/gnuRadoWindowsVersion.png}
-\caption{\rtl{پنجرهٔ نسخهٔ GNU Radio Companion}}\label{fig:gnu}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/GNUradioWindows_Spectrum.png}
-\caption{\rtl{پنجرهٔ طیف در GNU Radio ویندوز}}\label{fig:grspec}
-\end{figure}
-\clearpage
-\rp{شکل‌های \ref{fig:sdpp} و \ref{fig:angle} تصاویر دو نرم‌افزار آماده را نشان می‌دهند. این تصاویر به‌خودی‌خود تأیید انجام آزمون خواسته‌شده در دستورکار نیستند.}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/SDRpp_2.png}
-\caption{\rtl{رابط SDR++ و تنظیمات ثبت‌شده}}\label{fig:sdpp}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/SDR_angle1.png}
-\caption{\rtl{رابط SDRangel و تنظیمات ثبت‌شده}}\label{fig:angle}
-\end{figure}
-\clearpage
-\section{\rtl{مسیر ج؛ اوبونتو}}
-\begin{quote}\rp{\textbf{ثبت مسیر اوبونتو؛ در انتظار نوشتهٔ تیم.} در فایل‌های ورودی، مدرکی از این مسیر وجود ندارد. نسخهٔ اوبونتو، نسخهٔ GNU Radio، خروجی iio\_info، تصویر GRC و آزمون ابزار اضافی باید افزوده شوند.}\end{quote}
-\section{\rtl{مسیر د؛ پایتون}}
-\rp{خروجی قابل‌خواندن ترمینال در شکل \ref{fig:python} برابر \lr{samples: (4096,) sample\_rate: 2600000} است. جدول \ref{tab:python} تنظیمات کد را ثبت می‌کند.}
-\begin{table}[H]\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|p{0.55\linewidth}|p{0.32\linewidth}|}\hline
-\rtl{\lr{ip:192.168.1.10}} & \rtl{نشانی اتصال} \\ \hline
-\rtl{\lr{945 MHz}} & \rtl{فرکانس مرکزی} \\ \hline
-\rtl{\lr{2.6 / 2 MHz}} & \rtl{نرخ نمونه / پهنای باند} \\ \hline
-\rtl{\lr{manual / 20 dB}} & \rtl{حالت و بهرهٔ گیرنده} \\ \hline
-\rtl{\lr{4096}} & \rtl{اندازهٔ بافر} \\ \hline
-\rtl{ثبت نشده} & \rtl{نسخهٔ pyadi-iio} \\ \hline
-\rtl{مسیر ترمینال شامل \lr{radioconda} است} & \rtl{محیط اجرا} \\ \hline
-\end{tabular}
-\caption{\rtl{تنظیمات قابل‌خواندن پایتون}}\label{tab:python}\end{table}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/Python_output.png}
-\caption{\rtl{اسکریپت، نمودار و خروجی ترمینال در VS Code}}\label{fig:python}
-\end{figure}
-\clearpage
-\section{\rtl{وضعیت آمادگی و داده‌های خام}}
-\rp{جدول \ref{tab:ready} وضعیت مدارک را بر اساس جدول ۱۰ دستورکار نشان می‌دهد. این جدول جای امضای دستیار را نمی‌گیرد.}
-\begin{table}[H]\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|p{0.55\linewidth}|p{0.32\linewidth}|}\hline
-\rtl{تصویر پاسخ موجود؛ تصویر IPv4 لازم است} & \rtl{شبکه} \\ \hline
-\rtl{تصویر اجرا موجود؛ مشخصات دستگاه لازم است} & \rtl{الف} \\ \hline
-\rtl{تصاویر موجود؛ فلوگراف و ثبت آزمون نهایی لازم است} & \rtl{ب} \\ \hline
-\rtl{مدرک ارائه نشده} & \rtl{ج} \\ \hline
-\rtl{تصویر خروجی موجود؛ نسخه و فایل خام لازم است} & \rtl{د} \\ \hline
-\end{tabular}
-\caption{\rtl{وضعیت مدارک آمادگی}}\label{tab:ready}\end{table}
-\rp{فایل خام I/Q، فایل اصلی GRC، کد اصلی جلسه و لاگ کامل همراه ورودی نبودند. هیچ عددی برای توان، SNR یا کیفیت دریافت از روی تصاویر استخراج نشده است. اسکرین‌شات رابط نرم‌افزار فقط به‌عنوان مدرک رابط نگه داشته شده است؛ نمودار علمی نهایی باید از دادهٔ خام و ترجیحاً به‌صورت برداری تولید شود.}
+\Needspace{6\baselineskip}
+\section{\rtl{مسیر الف؛ MATLAB و بستهٔ پشتیبانی Pluto}}
+\rp{این مسیر به MATLAB، جعبه‌ابزارهای مشخص‌شده در دستورکار و بستهٔ پشتیبانی ADALM-Pluto نیاز دارد. دستورکار نصب بسته از Add-On Explorer، انتخاب راه‌اندازی بعدی و آزمون اتصال از طریق LAN را شرح می‌دهد. در آزمون دریافت، RadioID باید صریحاً نشانی شبکه باشد [۱، ص. ۶].}
 
-\section{\rtl{تحلیل و عیب‌یابی}}
-\begin{quote}\rp{\textbf{تحلیل نتایج؛ در انتظار نوشتهٔ تیم.} اعضای تیم توضیح خود را دربارهٔ معیار پذیرش، تنظیمات و شواهد هر مسیر می‌نویسند. ادعاهای عددی باید به فایل خام مشخص متصل باشند.}\end{quote}
-\begin{quote}\rp{\textbf{عیب‌یابی؛ در انتظار نوشتهٔ تیم.} نشانهٔ خطا، اقدام واقعی و نتیجهٔ آزمون مجدد را از لاگ جلسه وارد کنید.}\end{quote}
-\section{\rtl{نتیجه‌گیری}}
-\begin{quote}\rp{\textbf{جمع‌بندی؛ در انتظار نوشتهٔ تیم.} اعضای تیم جمع‌بندی خود را دربارهٔ آزمون‌های انجام‌شده، مدارک موجود و کارهای باقی‌مانده می‌نویسند.}\end{quote}
-\section{\rtl{اعلام استفاده از هوش مصنوعی}}
-\rp{در تهیهٔ این نسخه از ChatGPT برای ساخت قالب HTML/CSS و LaTeX، ویرایش نگارشی، سامان‌دهی تصاویر، رونویسی تنظیمات قابل‌خواندن و آماده‌کردن قالب کد استفاده شده است. بخش‌های تحلیل، تفسیر داده و نتیجه‌گیری در این نسخه خالی مانده‌اند تا اعضای تیم آن‌ها را بنویسند. مسئولیت بررسی نهایی با اعضای تیم است.}
+\rp{تصویر MATLAB1 هم متن اسکریپت دریافت و هم پنجرهٔ Spectrum Analyzer را نشان می‌دهد. تصاویر MATLAB2 تا MATLAB4 نماهای دیگر همین محیط و پنجرهٔ نمایش را ثبت کرده‌اند. پارامترهای قابل‌خواندن کد در جدول زیر آمده‌اند.}
 
-\begin{minipage}{\linewidth}
-\small
-\bibliographystyle{plainnat}
-\bibliography{references}
-\end{minipage}
+\rp{جدول \ref{tab:matlab} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.445\linewidth}|p{0.445\linewidth}|}\hline
+\rtl{\textbf{مقدار}} & \rtl{\textbf{پارامتر}} \\ \hline
+\rtl{\lr{ip:192.168.1.10}} & \rtl{\lr{RadioID}} \\ \hline
+\rtl{\lr{945e6 Hz}} & \rtl{\lr{CenterFrequency}} \\ \hline
+\rtl{\lr{2.6e6 sample/s}} & \rtl{\lr{BasebandSampleRate}} \\ \hline
+\rtl{\lr{Manual}} & \rtl{\lr{GainSource}} \\ \hline
+\rtl{\lr{20 dB}} & \rtl{\lr{Gain}} \\ \hline
+\rtl{\lr{4096}} & \rtl{\lr{SamplesPerFrame}} \\ \hline
+\rtl{\lr{double}} & \rtl{\lr{OutputDataType}} \\ \hline
+\rtl{در مدارک موجود ثبت نشده} & \rtl{نسخهٔ MATLAB} \\ \hline
+\rtl{خروجی کامل info(rx) موجود نیست} & \rtl{شمارهٔ سریال و سفت‌افزار} \\ \hline
+\rtl{در مدارک موجود ثبت نشده} & \rtl{بازهٔ فرکانسی فعال دستگاه} \\ \hline
+\end{tabular}\caption{\rtl{پارامترهای دیده‌شده در کد MATLAB}}\label{tab:matlab}\end{table}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:matlab} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/MATLAB1.png}\caption{\rtl{کد دریافت و پنجرهٔ Spectrum Analyzer در MATLAB}}\label{fig:matlab}\end{figure}
+\rp{در این اسکریپت، نمونه‌ها به Spectrum Analyzer داده می‌شوند و در پایان، شیء گیرنده با \lr{release(rx)} آزاد می‌شود. دستور \lr{info(rx)} برای ثبت مشخصات دستگاه در نظر گرفته شده است، اما متن کامل خروجی آن در فایل‌های ارسالی قرار ندارد. تصویر پنجرهٔ نرم‌افزار به‌عنوان مدرک اجرای رابط نگه داشته شده است؛ فایل داده یا نتیجهٔ کالیبره‌شدهٔ توان از آن ساخته نشده است.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{مسیر ب؛ GNU Radio و ابزارهای آمادهٔ ویندوز}}
+\rp{دستورکار برای ویندوز از توزیع Radioconda استفاده می‌کند. این مسیر، GNU Radio و ابزارهای ارتباط با دستگاه را در یک محیط فراهم می‌کند. فلوگراف آزمون شامل PlutoSDR Source و QT GUI Frequency Sink است و نرخ نمونهٔ متغیر فلوگراف باید با تنظیم منبع هماهنگ باشد [۱، ص. ۷–۸].}
+
+\rp{جدول \ref{tab:versions} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.288\linewidth}|p{0.288\linewidth}|p{0.288\linewidth}|}\hline
+\rtl{\textbf{محل ثبت}} & \rtl{\textbf{نسخهٔ قابل‌خواندن}} & \rtl{\textbf{نرم‌افزار}} \\ \hline
+\rtl{پنجرهٔ About} & \rtl{\lr{3.10.12.0}} & \rtl{\lr{GNU Radio Companion}} \\ \hline
+\rtl{پنجرهٔ About} & \rtl{\lr{3.12.9}} & \rtl{Python همراه GNU Radio} \\ \hline
+\rtl{نوار عنوان SDRpp\_2.png} & \rtl{\lr{1.3.2}} & \rtl{\lr{SDR++}} \\ \hline
+\rtl{نوار پایین SDR\_angle1.png} & \rtl{\lr{8.0.0}} & \rtl{\lr{SDRangel}} \\ \hline
+\end{tabular}\caption{\rtl{نسخه‌های قابل‌خواندن از تصاویر ابزارهای ویندوز}}\label{tab:versions}\end{table}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:gnuversion} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.14\textheight,keepaspectratio]{../assets/images/gnuRadoWindowsVersion.png}\caption{\rtl{پنجرهٔ About در GNU Radio Companion}}\label{fig:gnuversion}\end{figure}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:gnuspectrum} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/GNUradioWindows_Spectrum.png}\caption{\rtl{پنجرهٔ نمایش طیف GNU Radio در ویندوز}}\label{fig:gnuspectrum}\end{figure}
+\rp{آرشیو، تصاویر دو نرم‌افزار آمادهٔ SDR++ و SDRangel را نیز شامل می‌شود. تنظیمات زیر از دو تصویر مشخص رونویسی شده‌اند. مقادیر نمایشی با مقادیر خواسته‌شده در دستورکار در ستون‌های جدا آمده‌اند؛ هیچ‌یک به‌جای دیگری بازنویسی نشده است.}
+
+\rp{جدول \ref{tab:readyapps} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.21\linewidth}|p{0.21\linewidth}|p{0.21\linewidth}|p{0.21\linewidth}|}\hline
+\rtl{\textbf{دستورکار}} & \rtl{\textbf{\lr{SDR\_angle1.png}}} & \rtl{\textbf{\lr{SDRpp\_2.png}}} & \rtl{\textbf{مورد}} \\ \hline
+\rtl{\lr{945 MHz}} & \rtl{\lr{90 MHz}} & \rtl{\lr{96 MHz}} & \rtl{فرکانس نمایشی} \\ \hline
+\rtl{دستی؛ حداکثر 30 dB با آنتن} & \rtl{در این نما مشخص نیست} & \rtl{\lr{45 dB}} & \rtl{بهرهٔ گیرنده} \\ \hline
+\rtl{\lr{ip:192.168.1.10}} & \rtl{PlutoSDR؛ URI مشخص نیست} & \rtl{\lr{PlutoSDR / (usb)}} & \rtl{مسیر اتصال نمایشی} \\ \hline
+\end{tabular}\caption{\rtl{تنظیمات قابل‌خواندن نرم‌افزارهای آماده و مقادیر دستورکار}}\label{tab:readyapps}\end{table}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:sdrpp} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/SDRpp_2.png}\caption{\rtl{رابط SDR++ با تنظیمات ثبت‌شده در جدول نرم‌افزارهای آماده}}\label{fig:sdrpp}\end{figure}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:sdrangel} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/SDR_angle1.png}\caption{\rtl{رابط SDRangel و نمایش طیف و آبشار}}\label{fig:sdrangel}\end{figure}
+\rp{در دیگر تصاویر SDR++، فرکانس نمایشی ۹۲۴ مگاهرتز نیز دیده می‌شود. در مجموعهٔ موجود، فایل اصلی GRC و ثبت جداگانهٔ آزمون دو نرم‌افزار آماده با تنظیمات خواسته‌شدهٔ ۹۴۵ مگاهرتز موجود نیست. علت انتخاب این تنظیمات در لاگ مستقلی ثبت نشده و این گزارش علتی برای آن‌ها فرض نمی‌کند.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{مسیر ج؛ نصب اوبونتو و ابزارهای دریافت}}
+\rp{مسیر ج در دستورکار، نصب اوبونتو در کنار ویندوز، تنظیم شبکهٔ سیمی، نصب بسته‌های GNU Radio و libiio و آزمون شناسایی دستگاه را در بر می‌گیرد. چون نصب دوگانه با پارتیشن دیسک مرتبط است، دستورکار پیش از شروع بر تهیهٔ نسخهٔ پشتیبان تأکید دارد [۱، ص. ۸–۹].}
+
+\rp{برای ثبت این مسیر، دستورهای زیر در متن آزمایش آمده‌اند. این دستورها در این گزارش به‌عنوان روش آزمون نقل شده‌اند؛ خروجی آن‌ها برای جلسهٔ موردنظر در مدارک ورودی وجود ندارد.}
+
+\begin{quote}\begin{flushleft}\small
+\lr{ping -c 3 192.168.1.10}\\
+\lr{iio\_info -u ip:192.168.1.10}\\
+\lr{gnuradio-config-info --version}\\
+\end{flushleft}\end{quote}
+\rp{جدول \ref{tab:ubuntu} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.445\linewidth}|p{0.445\linewidth}|}\hline
+\rtl{\textbf{وضعیت ثبت}} & \rtl{\textbf{مورد}} \\ \hline
+\rtl{در مدارک موجود ثبت نشده} & \rtl{نسخهٔ Ubuntu و GNU Radio} \\ \hline
+\rtl{خروجی ارائه نشده} & \rtl{شناسایی دستگاه با iio\_info} \\ \hline
+\rtl{تصویر یا فایل ارائه نشده} & \rtl{اجرای فلوگراف روی Ubuntu} \\ \hline
+\rtl{در مدارک موجود ثبت نشده} & \rtl{آزمون iio-oscilloscope یا GQRX} \\ \hline
+\end{tabular}\caption{\rtl{وضعیت مدارک مسیر اوبونتو مطابق جدول ۸ دستورکار}}\label{tab:ubuntu}\end{table}
+\rp{وضعیت این مسیر در این گزارش «مستندنشده» است. این عبارت دربارهٔ وجود مدرک در بستهٔ ارسالی است و انجام‌شدن یا انجام‌نشدن واقعی نصب را تعیین نمی‌کند.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{مسیر د؛ پایتون، VS Code و دریافت نمونه‌ها}}
+\rp{این مسیر از VS Code و بستهٔ pyadi-iio استفاده می‌کند. در دستورکار، انتخاب مفسر همان محیط نصب‌شده و وجود libiio بومی ضروری دانسته شده است. اسکریپت نمونه، دستگاه را از URI شبکه باز می‌کند، تنظیمات گیرنده را می‌نویسد و یک بافر نمونه دریافت می‌کند [۱، ص. ۱۰–۱۱].}
+
+\rp{در تصویر Python\_output.png، متن فایل pluto\_test.py، نمودار و بخشی از ترمینال در کنار هم قرار دارند. خط خروجی خوانا در پایین ترمینال به صورت زیر ثبت شده است:}
+
+\begin{quote}\begin{flushleft}\small
+\lr{samples: (4096,)  sample\_rate: 2600000}\\
+\end{flushleft}\end{quote}
+\rp{جدول \ref{tab:python} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.445\linewidth}|p{0.445\linewidth}|}\hline
+\rtl{\textbf{ثبت موجود}} & \rtl{\textbf{مورد}} \\ \hline
+\rtl{\lr{ip:192.168.1.10}} & \rtl{\lr{URI}} \\ \hline
+\rtl{\lr{945e6 Hz}} & \rtl{\lr{rx\_lo}} \\ \hline
+\rtl{\lr{2.6e6 / 2e6 Hz}} & \rtl{\lr{sample\_rate / rx\_rf\_bandwidth}} \\ \hline
+\rtl{\lr{manual}} & \rtl{\lr{gain\_control\_mode\_chan0}} \\ \hline
+\rtl{\lr{20 dB}} & \rtl{\lr{rx\_hardwaregain\_chan0}} \\ \hline
+\rtl{\lr{4096 / (4096,)}} & \rtl{\lr{rx\_buffer\_size / x.shape}} \\ \hline
+\rtl{در مدارک موجود ثبت نشده} & \rtl{نسخهٔ pyadi-iio} \\ \hline
+\rtl{مسیر radioconda در ترمینال دیده می‌شود} & \rtl{محیط Python} \\ \hline
+\end{tabular}\caption{\rtl{تنظیمات و خروجی قابل‌خواندن مسیر پایتون}}\label{tab:python}\end{table}
+\rp{تصویر ثبت‌شده در شکل \ref{fig:python} آمده است.}
+\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=0.29\textheight,keepaspectratio]{../assets/images/Python_output.png}\caption{\rtl{محیط VS Code، اسکریپت دریافت و خروجی ترمینال}}\label{fig:python}\end{figure}
+\rp{کد قابل‌خواندن از پنجرهٔ هانینگ و FFT برای نمایش نمونه‌ها استفاده می‌کند. برچسب محور عمودی در تصویر، dB است. فایل خام و اطلاعات کالیبراسیون در ورودی نیستند؛ در این نسخه، عددی برای توان مطلق، چگالی طیفی یا SNR به این نمودار نسبت داده نشده است. فایل کد همراه سایت یک قالب آموزشی بازنویسی‌شده از دستورکار است و با فایل اصلی جلسه یکسان معرفی نمی‌شود.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{ثبت خطاها و حدود لاگ عیب‌یابی}}
+\rp{در تصویر پایتون، بخشی از ترمینال پیام خطای بازکردن مسیر نمونهٔ \lr{C:\textbackslash{}path\textbackslash{}to\textbackslash{}your\_script.py} را نشان می‌دهد. در بخش پایین‌تر همان تصویر، فرمانی با مسیر واقعی فایل pluto\_test.py و سپس خروجی تعداد نمونه‌ها دیده می‌شود. این دو متن از تصویر قابل‌خواندن‌اند؛ ترتیب کامل اقدام‌ها، علت خطای پیشین و شرح تصمیم‌های اعضای تیم در لاگ جداگانه ارائه نشده است.}
+
+\rp{در ابتدای تصویر ping نیز فرمانی شامل تکرار واژهٔ ping و سپس فرمان متوقف‌شده دیده می‌شود؛ آمار ثبت‌شدهٔ جدول شبکه از اجرای بعدی با فرمان صحیح نقل شده است. گزارش، خطاهای خارج از این تصاویر یا راه‌حل‌هایی که اجرای آن‌ها ثبت نشده را به جلسه نسبت نمی‌دهد.}
+
+\rp{جدول خطایابی دستورکار، برای خطاهای شناسایی‌نشدن دستگاه، URI شبکه و کتابخانهٔ بومی libiio راهنمای جداگانه دارد. آن جدول، مرجع بررسی خطاست و در این گزارش به‌عنوان لاگ رخداد واقعی جلسه معرفی نشده است [۱، ص. ۱۲].}
+
+\Needspace{6\baselineskip}
+\section{\rtl{وضعیت مدارک تحویل و بازتولید}}
+\rp{جدول زیر وضعیت وجود مدرک را در برابر مسیرهای جدول ۱۰ دستورکار ثبت می‌کند. وجود تصویر یک نرم‌افزار با تأیید نهایی همهٔ معیارهای پذیرش یکسان ثبت نشده است؛ امضای دستیار یا زمان تحویل نیز ساخته نشده است.}
+
+\rp{جدول \ref{tab:readiness} اطلاعات این بخش را ثبت می‌کند.}
+\begin{table}[H]\centering\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.288\linewidth}|p{0.288\linewidth}|p{0.288\linewidth}|}\hline
+\rtl{\textbf{اطلاعات یا مدرک ثبت‌نشده}} & \rtl{\textbf{مدارک موجود}} & \rtl{\textbf{مسیر}} \\ \hline
+\rtl{IPv4 کارت شبکه و تأیید دستیار} & \rtl{تصویر پاسخ ping} & \rtl{شبکه} \\ \hline
+\rtl{خروجی کامل info(rx) و نسخهٔ نرم‌افزار} & \rtl{۴ تصویر رابط و کد دریافت} & \rtl{الف؛ MATLAB} \\ \hline
+\rtl{فایل GRC و ثبت آزمون با تنظیمات خواسته‌شده} & \rtl{نسخه و نمایش GNU Radio؛ تصاویر دو ابزار آماده} & \rtl{ب؛ ویندوز} \\ \hline
+\rtl{نسخه‌ها، iio\_info و اجرای GRC} & \rtl{مدرکی در بسته نیست} & \rtl{ج؛ Ubuntu} \\ \hline
+\rtl{نسخهٔ کتابخانه، فایل اصلی کد و دادهٔ خام} & \rtl{تصویر کد، نمودار و تعداد نمونه‌ها} & \rtl{د؛ Python} \\ \hline
+\end{tabular}\caption{\rtl{ثبت مدارک موجود برای مسیرهای آزمایش صفر}}\label{tab:readiness}\end{table}
+\rp{فایل‌های قابل‌دریافت این سایت شامل گزارش PDF، منبع LaTeX و BibTeX و دو قالب کد دریافت هستند. دادهٔ خام و فلوگراف اصلی در بسته وجود ندارند؛ پوشه‌های مربوط، راهنمای نگهداری مدارک واقعی را دارند. هیچ فایل دادهٔ شبیه‌سازی‌شده به‌جای دادهٔ آزمایش قرار نگرفته است.}
+
+\rp{در متن آیین‌نامه، تحلیل، تفسیر داده و نتیجه‌گیری باید توسط اعضای تیم انجام شود [۲، بند ۷-۵]. متن تحلیلی مستقلی از اعضا همراه مدارک موجود نیست. این نسخه یک گزارش ثبت مستندات است و به‌عنوان تحلیل یا نتیجه‌گیری نوشته‌شده توسط اعضای گروه معرفی نمی‌شود.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{ایمنی و تنظیمات مرجع دریافت}}
+\rp{جدول ۳ دستورکار، برای دریافت با آنتن حالت بهرهٔ دستی و حداکثر بهرهٔ ۳۰ دسی‌بل را مشخص می‌کند. هنگام تغییر اتصال RF نیز ابتدا باید ارسال متوقف شود. نرم‌افزارهای آماده در آزمایش صفر فقط برای دریافت به کار می‌روند [۱، ص. ۴ و ۸].}
+
+\rp{آیین‌نامه دربارهٔ اتصال مستقیم TX به RX و ضرورت تضعیفگر، و دستورکار صفر دربارهٔ کابل حلقه و تضعیف نرم‌افزاری، عبارت‌های متفاوتی دارند. این گزارش آزمون حلقه یا ارسال را مستند نمی‌کند و برای رفع این تفاوت، دستور اجرایی تازه‌ای ارائه نمی‌دهد. هر آزمون ارسال یا حلقه باید با تأیید مدرس و تنظیمات ایمنی مورد تأیید آزمایشگاه انجام شود [۱، ص. ۴؛ ۲، بند ۸-۱].}
+
+\rp{در بستهٔ کد حاضر هیچ فرمان ارسال RF قرار ندارد. مقادیر دیده‌شده در تصاویر، از جمله بهرهٔ ۴۵ دسی‌بل در یکی از ثبت‌ها، صرفاً به‌عنوان مدرک جلسه حفظ شده‌اند و توصیهٔ تنظیم ایمن نیستند.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{دریافت گزارش و فایل‌های همراه}}
+\rp{نسخهٔ HTML همین گزارش، PDF، منبع LaTeX، مراجع BibTeX و فایل‌های همراه از صفحهٔ گزارش در وب‌سایت قابل دریافت‌اند. در آرشیو نیمسال، پیش‌گزارش و گزارش هر آزمایش مسیرهای مستقلی دارند.}
+
+\Needspace{6\baselineskip}
+\section{\rtl{مراجع و اعلام استفاده از ابزارها}}
+\rp{در تهیهٔ این نسخه از ChatGPT برای توضیح مفاهیم و روش‌های مندرج در دستورکار، ساخت HTML/CSS و LaTeX، ویرایش نگارشی، سامان‌دهی تصاویر، رونویسی اطلاعات قابل‌خواندن و آماده‌کردن قالب کد استفاده شده است. دادهٔ خام، خروجی آزمایش جدید یا تأیید انجام مسیرهای مستندنشده تولید نشده و این متن به‌عنوان تحلیل یا نتیجه‌گیری نوشته‌شده توسط اعضای گروه معرفی نمی‌شود.}
+
+\Needspace{9\baselineskip}
+\nocite{labmanual,regulations}\bibliographystyle{plainnat}\bibliography{references}
 \end{document}
