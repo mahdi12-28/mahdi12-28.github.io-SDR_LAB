@@ -1,6 +1,12 @@
 {
   "members": [
-    {"name": "", "student_id": ""},
-    {"name": "", "student_id": ""}
+    {
+      "name": "سروش مومنی",
+      "student_id": "402102538"
+    },
+    {
+      "name": "مهدی قلمی نوبر",
+      "student_id": "402102284"
+    }
   ]
 }
