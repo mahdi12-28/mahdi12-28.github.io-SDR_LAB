@@ -1,0 +1,15 @@
+{
+  "description": "Copy desired blocks into the blocks array of a report section. This file is a reference and is not published as a report.",
+  "blocks": [
+    {"type":"paragraph","text":"متن یک پاراگراف؛ برای عبارت انگلیسی یا کد از `code` استفاده کنید."},
+    {"type":"bullets","items":["مورد اول","مورد دوم"]},
+    {"type":"code","text":"print('example')"},
+    {"type":"equation","latex":"x[n] = I[n] + jQ[n]","label":"eq:lab01-iq"},
+    {"type":"table","headers":["پارامتر","مقدار"],"rows":[["Sample rate","2600000"]],"caption":"عنوان جدول","label":"tab:lab01-settings"},
+    {"type":"figure","path":"assets/lab01/figure.png","caption":"عنوان شکل","label":"fig:lab01-example"},
+    {"type":"downloads"},
+    {"type":"comments"},
+    {"type":"references"}
+  ],
+  "attachment_example":{"title":"دادهٔ خام واقعی","path":"data/lab01/actual-recording.cf32","description":"شرح نوع داده و شرایط ثبت"}
+}

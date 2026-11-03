@@ -24,7 +24,7 @@ document.querySelectorAll('[data-print]').forEach(b=>b.addEventListener('click',
 const gc=window.LAB_GISCUS||{},container=document.querySelector('.giscus');
 if(container&&gc.repo&&gc.repoId&&gc.category&&gc.categoryId){
  const script=document.createElement('script');script.src='https://giscus.app/client.js';script.async=true;script.crossOrigin='anonymous';
- const attributes={'repo':gc.repo,'repo-id':gc.repoId,'category':gc.category,'category-id':gc.categoryId,'mapping':'specific','term':'sdr-lab00-post-report','strict':'1','reactions-enabled':'1','emit-metadata':'0','input-position':'top','theme':'light','lang':'fa','loading':'lazy'};
+ const attributes={'repo':gc.repo,'repo-id':gc.repoId,'category':gc.category,'category-id':gc.categoryId,'mapping':'specific','term':document.body.dataset.commentTerm||'lab00-post','strict':'1','reactions-enabled':'1','emit-metadata':'0','input-position':'top','theme':'light','lang':'fa','loading':'lazy'};
  Object.entries(attributes).forEach(([key,value])=>script.setAttribute('data-'+key,value));
  const status=document.getElementById('comment-status');status.textContent='در حال بارگذاری داوری از GitHub Discussions…';
  script.onerror=()=>{status.textContent='بارگذاری کامنت‌ها انجام نشد. دسترسی اینترنت و تنظیمات giscus را بررسی کنید.';};
