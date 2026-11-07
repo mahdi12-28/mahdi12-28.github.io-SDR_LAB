@@ -5,5 +5,12 @@
     "tex": "report",
     "pdf": "lab00-report",
     "source_zip": "lab00-latex-source"
+  },
+  {
+    "lab": "lab01",
+    "kind": "post",
+    "tex": "lab01-post",
+    "pdf": "lab01-post",
+    "source_zip": "lab01-post-latex-source"
   }
 ]

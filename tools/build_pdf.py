@@ -20,7 +20,11 @@ def main():
     (ROOT/'downloads').mkdir(exist_ok=True)
     for r in selected:
         cmd=['xelatex','-interaction=nonstopmode','-halt-on-error',r['tex']+'.tex']
-        for command in [cmd,['bibtex',r['tex']],cmd,cmd]:subprocess.run(command,cwd=ROOT/'latex',check=True)
+        text=(ROOT/'latex'/(r['tex']+'.tex')).read_text(encoding='utf-8')
+        commands=[cmd]
+        if r'\bibliography{' in text:commands.append(['bibtex',r['tex']])
+        commands.extend([cmd,cmd])
+        for command in commands:subprocess.run(command,cwd=ROOT/'latex',check=True)
         target=ROOT/'downloads'/(r['pdf']+'.pdf')
         shutil.copyfile(ROOT/'latex'/(r['tex']+'.pdf'),target)
         print('Built '+str(target.relative_to(ROOT)))

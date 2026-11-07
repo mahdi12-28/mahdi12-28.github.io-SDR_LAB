@@ -1,0 +1,298 @@
+[
+  {
+    "file": "P1_GSMcarriers.png",
+    "path": "assets/images/lab01/P1_GSMcarriers.png",
+    "width": 1918,
+    "height": 995,
+    "sha256": "035b7b718b977d449d7a878afbc95cac69b7693fa9849727e092cc441e781c8d",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers2.png",
+    "path": "assets/images/lab01/P1_GSMcarriers2.png",
+    "width": 1918,
+    "height": 892,
+    "sha256": "57ff5e771716ce048c9b62f5920075a7898b9f97e8ed7c62fc08efa4822f2f41",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers_20MS.png",
+    "path": "assets/images/lab01/P1_GSMcarriers_20MS.png",
+    "width": 1918,
+    "height": 771,
+    "sha256": "3300547cdb9046c794aab396581828af5a60ae730f1060287d0af336556d8a06",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers_20MS_2.png",
+    "path": "assets/images/lab01/P1_GSMcarriers_20MS_2.png",
+    "width": 1913,
+    "height": 945,
+    "sha256": "f2eb5fd9f029172ea68b9f34fa66b0b19dc98c8932ba5980330b0c4771423e68",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers_947.png",
+    "path": "assets/images/lab01/P1_GSMcarriers_947.png",
+    "width": 1907,
+    "height": 1006,
+    "sha256": "d0adf38197f66220a20cd39efd6adb3e7aad5a002125bb0607f5f4a8d1094c95",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers_947_2.png",
+    "path": "assets/images/lab01/P1_GSMcarriers_947_2.png",
+    "width": 1915,
+    "height": 930,
+    "sha256": "913799db6890487a5e1b43866bee21bc8a769b9664dec9ca0b190fe1ac65178b",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P1_GSMcarriers_rfgain24_to_0.png",
+    "path": "assets/images/lab01/P1_GSMcarriers_rfgain24_to_0.png",
+    "width": 1905,
+    "height": 718,
+    "sha256": "d8601acc2f8acd9024aadb1d899ece7249d70d25e80831611c232ae3804edec1",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_DCoff.png",
+    "path": "assets/images/lab01/P2_DCoff.png",
+    "width": 1917,
+    "height": 922,
+    "sha256": "a505110eba3d561123e329028ba59444eeda5e679d77b877932720aee5aa97cb",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_DCoff2.png",
+    "path": "assets/images/lab01/P2_DCoff2.png",
+    "width": 1918,
+    "height": 817,
+    "sha256": "4508b7b0394d49f413f26a472bd0d1199e8b134d9e02d07ee39f59855949f1d5",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_f_lo_-100.png",
+    "path": "assets/images/lab01/P2_f_lo_-100.png",
+    "width": 1918,
+    "height": 822,
+    "sha256": "a4aedec765a326affc07cb029e960b6c5ddf3cfa739e502e16485f51b41ad75d",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_f_lo_-100_2.png",
+    "path": "assets/images/lab01/P2_f_lo_-100_2.png",
+    "width": 1902,
+    "height": 938,
+    "sha256": "473cd002d4879c51d10dc7854357de9f8794759986be35686dd1e97022fa7321",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_f_lo_200.png",
+    "path": "assets/images/lab01/P2_f_lo_200.png",
+    "width": 1907,
+    "height": 903,
+    "sha256": "4b290df008148448523b8a58b31007afc7f79433d44c20137bbbdd7f51ae10d3",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_f_lo_200_2.png",
+    "path": "assets/images/lab01/P2_f_lo_200_2.png",
+    "width": 1918,
+    "height": 797,
+    "sha256": "09174bf3892d177376e6e1d3b32d0ded8f2e7e2ad0f47162c0f47a4e8086d892",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_fc434.png",
+    "path": "assets/images/lab01/P2_fc434.png",
+    "width": 1918,
+    "height": 1017,
+    "sha256": "5ae87a445b928da82b6d0e8d49f277a3904a95827228ead8c9ec8aa71b654bc3",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_fc434_2.png",
+    "path": "assets/images/lab01/P2_fc434_2.png",
+    "width": 1918,
+    "height": 1007,
+    "sha256": "11314a24ce5fdb501da6da22db90ee8a53f513950cebb851fd9ee308d9031ae5",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_fc434_txInverted.png",
+    "path": "assets/images/lab01/P2_fc434_txInverted.png",
+    "width": 1918,
+    "height": 1005,
+    "sha256": "4f9f5040222e49d986094d93f3d5c813eab725e35346bd3828c4fecc6bd74e91",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_fc434_txInverted_2.png",
+    "path": "assets/images/lab01/P2_fc434_txInverted_2.png",
+    "width": 1918,
+    "height": 820,
+    "sha256": "f18e3779e6a795994682c10abe5f1a78915b0b5f967d8e948b0670eb20572730",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_fc434_txInverted_3.png",
+    "path": "assets/images/lab01/P2_fc434_txInverted_3.png",
+    "width": 1917,
+    "height": 898,
+    "sha256": "caa5f86c9b51c6a4a70f70d52b1497024b1f6479e3e3a83b8fac34031e56b9ef",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_flo_100.png",
+    "path": "assets/images/lab01/P2_flo_100.png",
+    "width": 1918,
+    "height": 831,
+    "sha256": "5bc8a75c5fa76eda63e6d7d092c9092ffc523d57559dbe420cd69cd381474563",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P2_flo_100_2.png",
+    "path": "assets/images/lab01/P2_flo_100_2.png",
+    "width": 1892,
+    "height": 932,
+    "sha256": "2f69f72ea3e16b8719882de9939b439e1bd10ab724d5b252cc99b60d68de6ddf",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_GSMuplink_afterCall.png",
+    "path": "assets/images/lab01/P3_GSMuplink_afterCall.png",
+    "width": 1918,
+    "height": 662,
+    "sha256": "8245bd0fa4070f2e3571f9bbe79b310f5e638b7c711a5220c073ca6443ba6b27",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_GSMuplink_noCall.png",
+    "path": "assets/images/lab01/P3_GSMuplink_noCall.png",
+    "width": 1908,
+    "height": 683,
+    "sha256": "111b7c040cc8389eaa59627382975c82b884abcde102e06e9c0994c0cd038d23",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_GSMuplink_waterfallBursts.png",
+    "path": "assets/images/lab01/P3_GSMuplink_waterfallBursts.png",
+    "width": 1918,
+    "height": 237,
+    "sha256": "3ff4dc0965d3b707f42a8b4b4c79f24bb24ec80fc7cd254ec4047be8a558befb",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_radio3.png",
+    "path": "assets/images/lab01/P3_radio3.png",
+    "width": 1916,
+    "height": 911,
+    "sha256": "a19ee06ed9359bf9ef7b7558115b5ea8049652ee265eed9b023087942cb2230c",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_radio_1.png",
+    "path": "assets/images/lab01/P3_radio_1.png",
+    "width": 1918,
+    "height": 507,
+    "sha256": "23c90c2591107b24f9413c503cdf19e2078aef967665478c37c2dc6fa8dc0646",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_radio_2.png",
+    "path": "assets/images/lab01/P3_radio_2.png",
+    "width": 1918,
+    "height": 647,
+    "sha256": "253851dbd7f4ef3e34b16878e0f1a66581c0caa4381d5e7d1688fb62655061ba",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_remote.png",
+    "path": "assets/images/lab01/P3_remote.png",
+    "width": 1917,
+    "height": 763,
+    "sha256": "d9cc212bb4c8792a73849dc9413c22a4861b8daa7c52e015a3ce1e9118b75aa1",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_remote3.png",
+    "path": "assets/images/lab01/P3_remote3.png",
+    "width": 1677,
+    "height": 638,
+    "sha256": "288b7fd51c80e0276fb410cf0ffdd9e7df41508e89c44a4e8c315b55d2db7c7a",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_remote_2.6M.png",
+    "path": "assets/images/lab01/P3_remote_2.6M.png",
+    "width": 1918,
+    "height": 691,
+    "sha256": "be074d927a769f2426a2fec98c4f3b2874167c83c05a3466f18399ede89610bc",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_remote_off.png",
+    "path": "assets/images/lab01/P3_remote_off.png",
+    "width": 1612,
+    "height": 537,
+    "sha256": "3b826c04e0946dfd5e1fb794b2be46c3875e47c86a77606af97a8ba0f02398aa",
+    "source": "photos.zip"
+  },
+  {
+    "file": "P3_remote_on.png",
+    "path": "assets/images/lab01/P3_remote_on.png",
+    "width": 1682,
+    "height": 586,
+    "sha256": "13a57733102d8ca234fc3e960712558058814f2da7bd9515f520b2597fdba9c0",
+    "source": "photos.zip"
+  },
+  {
+    "file": "Screenshot 2026-11-04 093312.png",
+    "path": "assets/images/lab01/Screenshot 2026-11-04 093312.png",
+    "width": 693,
+    "height": 888,
+    "sha256": "8e49786e02fd9d6947fc362e9a570b6cc6b7570abb72ae8bc0a8c98581380d78",
+    "source": "photos.zip"
+  },
+  {
+    "file": "Screenshot 2026-11-04 093343.png",
+    "path": "assets/images/lab01/Screenshot 2026-11-04 093343.png",
+    "width": 693,
+    "height": 362,
+    "sha256": "37f295b0dee0806b3390bbe1c8d6fa42ee1affece5f151bdac63d3841a43786b",
+    "source": "photos.zip"
+  },
+  {
+    "file": "Screenshot 2026-11-04 095413.png",
+    "path": "assets/images/lab01/Screenshot 2026-11-04 095413.png",
+    "width": 695,
+    "height": 756,
+    "sha256": "af90e1a053a3b412e8c199be554b3a54fb89a092d3ce219ce92959f7ce164020",
+    "source": "photos.zip"
+  },
+  {
+    "file": "Screenshot 2026-11-04 100434.png",
+    "path": "assets/images/lab01/Screenshot 2026-11-04 100434.png",
+    "width": 697,
+    "height": 765,
+    "sha256": "acbf315f375ba3101bebd1449a9acfc78cf7d9453b103ebba88937cf871f52c4",
+    "source": "photos.zip"
+  },
+  {
+    "file": "command_properties.png",
+    "path": "assets/images/lab01/command_properties.png",
+    "width": 1477,
+    "height": 753,
+    "sha256": "fff6e2db62b00e4c5ec0ea48e2380df7aed60f12fde28c52a8695b564dbac97b",
+    "source": "photos.zip"
+  },
+  {
+    "file": "real_values.png",
+    "path": "assets/images/lab01/real_values.png",
+    "width": 1198,
+    "height": 551,
+    "sha256": "5d76b0bef62fe342eb8e125fea188dbd3e98f740ec896e26100b81e2c2ee3b69",
+    "source": "photos.zip"
+  }
+]

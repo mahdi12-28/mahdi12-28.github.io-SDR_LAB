@@ -1,0 +1,23 @@
+{
+  "description": "Copy to manifest.json. Replace null file with the real path and verify metadata. Values below are an example configuration, not measured results.",
+  "recordings": [
+    {
+      "id": "remote",
+      "file": null,
+      "fs_hz": 2600000,
+      "fc_hz": 434500000,
+      "nfft": 8192,
+      "continuous_verified": false,
+      "signals": [
+        {"id": "remote-channel", "roi_hz": [433700000, 434100000], "x_db": 6}
+      ],
+      "bursts": {
+        "center_hz": 433920000,
+        "bandwidth_hz": 100000,
+        "step_s": 0.0001,
+        "warmup_s": 0.002,
+        "threshold_db_relative": -60
+      }
+    }
+  ]
+}

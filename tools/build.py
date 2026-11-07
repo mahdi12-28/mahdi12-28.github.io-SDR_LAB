@@ -45,6 +45,7 @@ def gallery():
     return '<p>هر ۱۷ تصویر با نام و محتوای اصلی نگه داشته شده‌اند. روی تصویر بزنید تا نسخهٔ کامل باز شود.</p><div class="gallery-tools"><div class="filters" role="group" aria-label="فیلتر تصاویر">'+filters+'</div><span id="gallery-count" class="small text-muted" aria-live="polite">۱۷ تصویر</span></div><div class="gallery">'+''.join(html_figure({'file':f,'caption':c},group=g) for f,g,c in PHOTOS)+'</div>'
 def downloads(lab,kind,doc):
     files=[(f'downloads/{pdf_name(lab,kind)}.pdf','گزارش PDF','ساخته‌شده با LaTeX'),(f'downloads/{source_name(lab,kind)}.zip','منبع LaTeX و تصاویر','قابل بازبینی و کامپایل'),(f'latex/{stem(lab,kind)}.tex','فایل TEX','منبع همین گزارش'),('latex/references.bib','مراجع BibTeX','مراجع مشترک')]
+    if doc.get('attachments_only'):files=[]
     if lab['id']=='lab00':files += [('code/pluto_receive_template.py','قالب دریافت پایتون','بازنویسی آموزشی؛ فایل اصلی جلسه نیست'),('code/matlab_receive_template.m','قالب دریافت MATLAB','بازنویسی آموزشی؛ فایل اصلی جلسه نیست'),('data/README.md','وضعیت دادهٔ خام','دادهٔ I/Q در ورودی موجود نبود'),('flowgraphs/README.md','وضعیت فلوگراف','فایل اصلی GRC در ورودی موجود نبود')]
     files += [(a['path'],a['title'],a.get('description','فایل همراه')) for a in doc.get('attachments',[])]
     return '<div class="files">'+''.join(f'<a class="file" href="../../../{esc(p)}"><b>{esc(t)} ↙</b><small>{esc(d)}</small></a>' for p,t,d in files)+'</div>'
@@ -67,6 +68,9 @@ def html_document(lab,kind,doc):
             elif t=='references':blocks.append('<ol class="source-list">'+''.join('<li>'+inline(r)+'</li>' for r in doc.get('references',REFS))+'</ol>')
             else:raise ValueError('Unknown block type: '+t)
         parts.append(f'<section class="report-section" id="{esc(sec["id"])}"><span class="section-index">{i:02} / {lab["id"].upper()}</span><h2>{esc(sec["title"])}</h2>'+''.join(blocks)+'</section>')
+    if doc.get('attachments_only'):
+        body='<main id="main" class="wrap section"><h1>'+esc(doc['title'])+'</h1>'+''.join(parts)+'<a class="top-link" href="../../../index.html#experiments">بازگشت به فهرست آزمایش‌ها ←</a></main>'
+        return shell(doc['title'],body,'../../../')
     name='پیش‌گزارش' if kind=='pre' else 'گزارش پس از جلسه';rec=lab[kind]
     note='<div class="note neutral"><p>'+inline(doc['document_note'])+'</p></div>' if doc.get('document_note') else ''
     toc=''.join('<a href="#'+esc(s['id'])+'">'+esc(s['title'])+'</a>' for s in doc['sections'])
@@ -115,39 +119,61 @@ PREAMBLE=r'''\documentclass[10pt,a4paper]{article}
 \begin{document}
 '''
 def latex_document(lab,kind,doc):
-    name='پیش‌گزارش' if kind=='pre' else 'گزارش پس از جلسه'
-    s=PREAMBLE+'\\fancyhead[R]{\\small\\rtl{آزمایش '+fa(lab['number'])+' | '+name+'}}\n'
+    def document_tin(text):
+        if not doc.get('unicode_technical'):
+            return tin(text)
+        text=str(text).replace('\u200e','').replace('–','-').replace('—','-').replace('`','')
+        pattern=r'[A-Za-z0-9α-ωΑ-Ω≈±×∆Δ≤≥⁶−][A-Za-z0-9α-ωΑ-Ω≈±×∆Δ≤≥⁶−_./=+()%:;,@#&?{}*<>\[\] -]*'
+        out=[];last=0
+        for m in re.finditer(pattern,text):
+            value=m.group().rstrip();out.append(tescape(text[last:m.start()]));out.append(r'\lr{'+tescape(value)+'}');last=m.start()+len(value)
+        out.append(tescape(text[last:]));return ''.join(out)
+    def document_para(text):return '\\rp{'+document_tin(text)+'}\n\n'
+    name='پیش‌گزارش'  if kind=='pre' else 'گزارش پس از جلسه'
+    preamble=PREAMBLE
+    if doc.get('unicode_technical'):
+        preamble=preamble.replace(r'\newfontfamily\latinfont[Path=../assets/fonts/,BoldFont=Estedad-Bold.ttf]{Estedad-Medium.ttf}',r'\newfontfamily\latinfont[Path=../assets/fonts/,BoldFont=DejaVuSans-Bold.ttf]{DejaVuSans.ttf}')
+        preamble=preamble.replace(r'\begin{document}',r'\renewcommand{\labelitemi}{\lr{-}}'+'\n'+r'\begin{document}')
+    s=preamble+'\\fancyhead[R]{\\small\\rtl{آزمایش '+fa(lab['number'])+' | '+name+'}}\n'
     s+='\\begin{titlepage}\\begin{center}\\vspace*{12mm}\n{\\color{teal}\\Large\\lr{'+lab['id'].upper()+' / '+kind.upper()+'}}\\\\[12mm]\n{\\LARGE\\bfseries\\rtl{'+tescape(doc['title'])+'}}\\\\[9mm]\n'
-    for line in [SITE['team_name'],SITE['instructor'],SITE['semester']]:s+='\\rtl{'+tescape(line)+'}\\\\[4mm]\n'
+    for line in [SITE['team_name'],SITE['instructor'],SITE['semester']]:s+='\\rtl{'+document_tin(line)+'}\\\\[4mm]\n'
     s+='\\vspace{10mm}\n'
     for i,m in enumerate(TEAM['members'],1):
         who=tescape(m['name']) if m['name'].strip() else r'\rule{45mm}{0.3pt}'
         sid=r'\lr{'+tescape(m['student_id'])+'}' if m['student_id'].strip() else r'\rule{35mm}{0.3pt}'
         s+='\\rtl{عضو '+fa(i)+'؛ نام و نام خانوادگی: '+who+'}\\\\[5mm]\n\\rtl{شمارهٔ دانشجویی: '+sid+'}\\\\[9mm]\n'
-    s+='\\rtl{تاریخ جلسه: '+tescape(lab['session_date'])+'}\\\\[4mm]\n\\rtl{تحویل: '+tescape(lab[kind]['date'])+'}\\\\[8mm]\n\\end{center}\n'
-    if doc.get('document_note'):s+='\\begin{quote}'+para(doc['document_note'])+'\\end{quote}\n'
+    s+='\\rtl{تاریخ جلسه: '+document_tin(lab['session_date'])+'}\\\\[4mm]\n\\rtl{تحویل: '+tescape(lab[kind]['date'])+'}\\\\[8mm]\n\\end{center}\n'
+    if doc.get('document_note'):s+='\\begin{quote}'+document_para(doc['document_note'])+'\\end{quote}\n'
     s+='\\end{titlepage}\n';count=0
     for sec in doc['sections']:
         if sec.get('pdf') is False:continue
-        blocks=[b for b in sec['blocks'] if b['type'] not in ['gallery','comments','references']]
+        blocks=[b for b in sec['blocks'] if b['type'] not in (['gallery','comments'] if doc.get('explicit_references') else ['gallery','comments','references'])]
         if not blocks:continue
+        if doc.get('explicit_references') and sec['id']=='references':s+='\\clearpage\n'
         s+='\\Needspace{6\\baselineskip}\n\\section{\\rtl{'+tescape(sec['title'])+'}}\n'
         for b in blocks:
             t=b['type']
-            if t=='paragraph':s+=para(b['text'])
-            elif t=='bullets':s+='\\begin{itemize}\n'+''.join('\\item \\rtl{'+tin(x)+'}\n' for x in b['items'])+'\\end{itemize}\n'
+            if t=='paragraph':s+=document_para(b['text'])
+            elif t=='bullets':s+='\\begin{itemize}\n'+''.join('\\item \\rtl{'+document_tin(x)+'}\n' for x in b['items'])+'\\end{itemize}\n'
             elif t=='code':s+='\\begin{quote}\\begin{flushleft}\\small\n'+''.join(r'\lr{'+tescape(line)+'}\\\\\n' for line in b['text'].splitlines())+'\\end{flushleft}\\end{quote}\n'
             elif t=='equation':s+='\\begin{equation}'+b['latex']+'\\label{'+b['label']+'}\\end{equation}\n'
             elif t=='figure':
                 count+=1;label=b.get('label','fig:'+str(count));height='0.14' if b.get('compact') else '0.29'
-                s+='\\rp{تصویر ثبت‌شده در شکل \\ref{'+label+'} آمده است.}\n\\begin{figure}[H]\\centering\\includegraphics[width=0.96\\linewidth,height='+height+'\\textheight,keepaspectratio]{../'+image_path(b)+'}\\caption{\\rtl{'+tin(b['caption'])+'}}\\label{'+label+'}\\end{figure}\n'
+                s+='\\rp{تصویر ثبت‌شده در شکل \\ref{'+label+'} آمده است.}\n\\begin{figure}[H]\\centering\\includegraphics[width=0.96\\linewidth,height='+height+'\\textheight,keepaspectratio]{../'+image_path(b)+'}\\caption{\\rtl{'+document_tin(b['caption'])+'}}\\label{'+label+'}\\end{figure}\n'
             elif t=='table':
                 n=len(b['headers']);width=(0.94-0.025*n)/n;label=b['label']
                 s+='\\rp{جدول \\ref{'+label+'} اطلاعات این بخش را ثبت می‌کند.}\n\\begin{table}[H]\\centering\\small\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{|'+('|'.join('p{'+str(round(width,3))+'\\linewidth}' for _ in range(n)))+'|}\\hline\n'
-                s+=' & '.join(r'\rtl{\textbf{'+tin(x)+'}}' for x in reversed(b['headers']))+' \\\\ \\hline\n'
-                s+=''.join(' & '.join(r'\rtl{'+tin(x)+'}' for x in reversed(row))+' \\\\ \\hline\n' for row in b['rows'])
-                s+='\\end{tabular}\\caption{\\rtl{'+tin(b['caption'])+'}}\\label{'+label+'}\\end{table}\n'
+                s+=' & '.join(r'\rtl{\textbf{'+document_tin(x)+'}}' for x in reversed(b['headers']))+' \\\\ \\hline\n'
+                s+=''.join(' & '.join(r'\rtl{'+document_tin(x)+'}' for x in reversed(row))+' \\\\ \\hline\n' for row in b['rows'])
+                s+='\\end{tabular}\\caption{\\rtl{'+document_tin(b['caption'])+'}}\\label{'+label+'}\\end{table}\n'
+            elif t=='references':
+                for ref in doc.get('references',[]):
+                    found=re.search(r'https?://\S+',ref)
+                    if found:
+                        s+=document_para(ref[:found.start()])+'\\begin{flushleft}\\small\\url{'+found.group()+'}\\end{flushleft}\n'
+                    else:s+=document_para(ref)
             elif t=='downloads':s+=para('نسخهٔ HTML همین گزارش، PDF، منبع LaTeX، مراجع BibTeX و فایل‌های همراه از صفحهٔ گزارش در وب‌سایت قابل دریافت‌اند. در آرشیو نیمسال، پیش‌گزارش و گزارش هر آزمایش مسیرهای مستقلی دارند.')
+    if doc.get('explicit_references'):return s+'\\end{document}\n'
     s+='\\Needspace{9\\baselineskip}\n\\nocite{'+','.join(doc.get('bib_keys',['regulations']))+'}\\bibliographystyle{plainnat}\\bibliography{references}\n\\end{document}\n'
     return s
 
@@ -162,7 +188,9 @@ def build():
                 continue
             doc=read(f'content/{lab["id"]}/{kind}.json')
             if not any(b['type'] in ['paragraph','bullets','code','equation','table','figure'] for sec in doc['sections'] for b in sec.get('blocks',[])):raise ValueError('Cannot include a report with no substantive content')
-            write(dest,html_document(lab,kind,doc));write('latex/'+stem(lab,kind)+'.tex',latex_document(lab,kind,doc))
+            write(dest,html_document(lab,kind,doc))
+            if doc.get('attachments_only'):continue
+            write('latex/'+stem(lab,kind)+'.tex',latex_document(lab,kind,doc))
             generated.append({'lab':lab['id'],'kind':kind,'tex':stem(lab,kind),'pdf':pdf_name(lab,kind),'source_zip':source_name(lab,kind)})
     write('index.html',homepage());write('content/generated.json',json.dumps(generated,ensure_ascii=False,indent=2))
     write('assets/js/config.js','window.LAB_GISCUS = '+json.dumps(SITE['giscus'],ensure_ascii=False,indent=2)+';\n')
