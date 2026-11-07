@@ -1,0 +1,52 @@
+{
+  "title": "پیش‌گزارش آزمایش اول",
+  "summary": "",
+  "document_note": "",
+  "attachments_only": true,
+  "attachments": [
+    {
+      "path": "reports/lab01-prelab/Lab01_monitor.grc",
+      "title": "Lab01_monitor.grc",
+      "description": "فایل فلوگراف پایش طیف برای GNU Radio Companion."
+    },
+    {
+      "path": "reports/lab01-prelab/Lab01_loopback.grc",
+      "title": "Lab01_loopback.grc",
+      "description": "فایل فلوگراف آزمون حلقهٔ بازگشت برای GNU Radio Companion."
+    },
+    {
+      "path": "reports/lab01-prelab/SDRLab_IQ_recorder.py",
+      "title": "SDRLab_IQ_recorder.py",
+      "description": "کد پایتون بلوک ضبط‌کنندهٔ نمونه‌های IQ."
+    }
+  ],
+  "sections": [
+    {
+      "id": "flowgraphs",
+      "title": "تصاویر فلوگراف‌ها",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "reports/lab01-prelab/flowgraph_monitor.png",
+          "caption": "تصویر فلوگراف Monitor؛ پایش طیف و ضبط نمونه‌های IQ."
+        },
+        {
+          "type": "figure",
+          "path": "reports/lab01-prelab/flowgraph_loopback.png",
+          "caption": "تصویر فلوگراف Loopback؛ ساختار آزمون حلقهٔ بازگشت."
+        }
+      ]
+    },
+    {
+      "id": "downloads",
+      "title": "فایل‌ها",
+      "blocks": [
+        {
+          "type": "downloads"
+        }
+      ]
+    }
+  ],
+  "references": [],
+  "bib_keys": []
+}
