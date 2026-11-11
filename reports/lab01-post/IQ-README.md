@@ -9,7 +9,7 @@ python -m pip install numpy scipy matplotlib
 python code/lab01/session_analysis.py --recordings "C:/Users/LENOVO/Desktop/Daneshgah/SDRLab/Lab1/recordings"
 ```
 
-روی رایانهٔ دیگر، مسیر آخر را به پوشهٔ نسخهٔ خام تغییر دهید و SHA-256 را با manifest تطبیق دهید. کد به رادیو وصل نمی‌شود. فایل‌های خام در این کامیت نیستند؛ حجم کل آن‌ها ۱٬۴۱۹٬۸۰۰٬۵۷۶ بایت است. برای بازتولید مستقل باید همان فایل‌های اصلی دریافت شوند.
+روی رایانهٔ دیگر، مسیر آخر را به پوشهٔ نسخهٔ خام تغییر دهید و SHA-256 را با manifest تطبیق دهید. کد به رادیو وصل نمی‌شود. به علت حجم زیاد فایل های IQ تنها دو فایل به عنوان نمونه بارگزاری شده اند. حجم کل ۲۲ ضبط اصلی ۱٬۴۱۹٬۸۰۰٬۵۷۶ بایت است؛ برای بازتولید همهٔ تحلیل‌ها، سایر ضبط‌های اصلی نیز لازم‌اند.
 
 خروجی: `data/lab01/session/results.json` و `manifest.json` و شش تصویر در `assets/images/lab01/iq`. نسخهٔ PDF و HTML از `content/lab01/post.json` ساخته می‌شود؛ اجرای تحلیل، متن علمی را خودکار تغییر نمی‌دهد.
 
@@ -51,3 +51,8 @@ R21 | `Ghalami_Momeni_lab01_946530000_2600000_30.0_20261104T093610.cf32` | 2.218
 R22 | `Ghalami_Momeni_lab01_959000000_20000000_20.0_20261104T101301.cf32` | 0.500000 | 20
 
 SHA-256 کامل در [manifest.json](../../data/lab01/session/manifest.json) و همهٔ برآوردها در [results.json](../../data/lab01/session/results.json) موجود است.
+
+## دریافت دو فایل نمونه
+
+- [نمونهٔ IQ اول: تن منفی حلقه](../../downloads/lab01/iq/Ghalami_Momeni_lab01_434000000_2600000_10.0_20261104T094843.cf32)
+- [نمونهٔ IQ دوم: آزمون جابه‌جایی LO](../../downloads/lab01/iq/Ghalami_Momeni_lab01_434100000_2600000_10.0_20261104T095058.cf32)
