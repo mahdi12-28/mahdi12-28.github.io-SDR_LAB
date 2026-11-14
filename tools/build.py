@@ -186,6 +186,11 @@ def build():
             if not lab[kind]['publish']:
                 (ROOT/dest).unlink(missing_ok=True)
                 continue
+            # Independently authored pages retain their own build workflow.
+            if lab[kind].get('external'):
+                if not (ROOT/dest).is_file():
+                    raise ValueError('Missing external report: '+dest)
+                continue
             doc=read(f'content/{lab["id"]}/{kind}.json')
             if not any(b['type'] in ['paragraph','bullets','code','equation','table','figure'] for sec in doc['sections'] for b in sec.get('blocks',[])):raise ValueError('Cannot include a report with no substantive content')
             write(dest,html_document(lab,kind,doc))

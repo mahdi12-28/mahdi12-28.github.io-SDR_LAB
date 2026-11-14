@@ -1,0 +1,294 @@
+{
+  "noise": [
+    {
+      "gain_db": 29.7,
+      "open_dbfs": -73.363823,
+      "off_dbfs": -72.307777,
+      "on_dbfs": -49.186287,
+      "open_image": "Part1_N_off_gain29.7.png",
+      "off_image": "Part2_N_off_gain29.7.png",
+      "on_image": "Part2_N_on_gain29.7.png",
+      "y_db": 23.12149,
+      "y_linear": 205.1866022900883,
+      "q_db": 23.100272424405443,
+      "nf_y_algebraic_db": -8.100272424405443,
+      "nf_y_physical": false,
+      "nf_direct_gfs20_db": 24.61557708672038,
+      "nf_direct_gain_adjusted_db": 35.11557708672038,
+      "sensitivity": 1.0048974809746787,
+      "nf_shift_y_plus_point1_db": -0.1004841257079926,
+      "nf_shift_y_minus_point1_db": 0.10049545831839257
+    },
+    {
+      "gain_db": 40.2,
+      "open_dbfs": -74.248352,
+      "off_dbfs": -67.706673,
+      "on_dbfs": -66.363701,
+      "open_image": "Part1_N_off_gain40.2.png",
+      "off_image": "Part2_N_off_gain40.2.png",
+      "on_image": "Part2_N_on_gain40.2.png",
+      "y_db": 1.342971999999989,
+      "y_linear": 1.362376676435483,
+      "q_db": -4.408397624889767,
+      "nf_y_algebraic_db": 19.408397624889766,
+      "nf_y_physical": true,
+      "nf_direct_gfs20_db": 23.731048086720364,
+      "nf_direct_gain_adjusted_db": 23.731048086720364,
+      "sensitivity": 3.7595594999007576,
+      "nf_shift_y_plus_point1_db": -0.36457774540330845,
+      "nf_shift_y_minus_point1_db": 0.3885334437712291
+    },
+    {
+      "gain_db": 49.6,
+      "open_dbfs": -66.232353,
+      "off_dbfs": -58.960712,
+      "on_dbfs": -30.582338,
+      "open_image": "Part1_N_off_gain49.6.png",
+      "off_image": "Part2_N_off_gain49.6.png",
+      "on_image": "Part2_N_on_gain49.6.png",
+      "y_db": 28.378374,
+      "y_linear": 688.3945129531601,
+      "q_db": 28.37206061109796,
+      "nf_y_algebraic_db": -13.372060611097961,
+      "nf_y_physical": false,
+      "nf_direct_gfs20_db": 31.747047086720386,
+      "nf_direct_gain_adjusted_db": 22.347047086720387,
+      "sensitivity": 1.0014547686680009,
+      "nf_shift_y_plus_point1_db": -0.10014381240274617,
+      "nf_shift_y_minus_point1_db": 0.10014716715398797
+    }
+  ],
+  "single_tone": [
+    {
+      "attenuation_db": 60.0,
+      "input_nominal_dbm": -95.5,
+      "output_dbfs": -25.0,
+      "mixed_scale_offset_db": 70.5,
+      "compression_db": -0.06666666666666288
+    },
+    {
+      "attenuation_db": 55.0,
+      "input_nominal_dbm": -90.5,
+      "output_dbfs": -20.2,
+      "mixed_scale_offset_db": 70.3,
+      "compression_db": 0.1333333333333364
+    },
+    {
+      "attenuation_db": 52.0,
+      "input_nominal_dbm": -87.5,
+      "output_dbfs": -17.0,
+      "mixed_scale_offset_db": 70.5,
+      "compression_db": -0.06666666666666288
+    },
+    {
+      "attenuation_db": 51.0,
+      "input_nominal_dbm": -86.5,
+      "output_dbfs": -16.4,
+      "mixed_scale_offset_db": 70.1,
+      "compression_db": 0.3333333333333357
+    },
+    {
+      "attenuation_db": 50.0,
+      "input_nominal_dbm": -85.5,
+      "output_dbfs": -15.5,
+      "mixed_scale_offset_db": 70.0,
+      "compression_db": 0.4333333333333371
+    },
+    {
+      "attenuation_db": 49.0,
+      "input_nominal_dbm": -84.5,
+      "output_dbfs": -14.1,
+      "mixed_scale_offset_db": 70.4,
+      "compression_db": 0.03333333333333677
+    },
+    {
+      "attenuation_db": 48.0,
+      "input_nominal_dbm": -83.5,
+      "output_dbfs": -13.6,
+      "mixed_scale_offset_db": 69.9,
+      "compression_db": 0.5333333333333368
+    },
+    {
+      "attenuation_db": 47.0,
+      "input_nominal_dbm": -82.5,
+      "output_dbfs": -12.3,
+      "mixed_scale_offset_db": 70.2,
+      "compression_db": 0.23333333333333783
+    },
+    {
+      "attenuation_db": 46.0,
+      "input_nominal_dbm": -81.5,
+      "output_dbfs": -11.2,
+      "mixed_scale_offset_db": 70.3,
+      "compression_db": 0.1333333333333364
+    },
+    {
+      "attenuation_db": 45.0,
+      "input_nominal_dbm": -80.5,
+      "output_dbfs": -10.2,
+      "mixed_scale_offset_db": 70.3,
+      "compression_db": 0.1333333333333364
+    }
+  ],
+  "small_signal_offset": 70.43333333333334,
+  "single_tone_slope": 0.9818033677349272,
+  "max_observed_compression_db": 0.5333333333333368,
+  "two_tone": [
+    {
+      "attenuation_db": 65,
+      "f1_dbfs": -27.925411,
+      "f2_dbfs": -27.930531,
+      "im3_low_dbfs": -73.734848,
+      "im3_high_dbfs": -73.775261,
+      "image": "Part4_65dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -100.5,
+      "fundamental_powermean_dbfs": -27.92797024548896,
+      "im3_powermean_dbfs": -73.75500749259072,
+      "delta_db": 45.82703724710176,
+      "apparent_iip3_dbm": -77.58648137644911
+    },
+    {
+      "attenuation_db": 63,
+      "f1_dbfs": -26.183355,
+      "f2_dbfs": -26.188061,
+      "im3_low_dbfs": -72.081512,
+      "im3_high_dbfs": -72.095673,
+      "image": "Part4_63dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -98.5,
+      "fundamental_powermean_dbfs": -26.185707362574362,
+      "im3_powermean_dbfs": -72.08858672817234,
+      "delta_db": 45.90287936559798,
+      "apparent_iip3_dbm": -75.54856031720101
+    },
+    {
+      "attenuation_db": 61,
+      "f1_dbfs": -25.793596,
+      "f2_dbfs": -25.798838,
+      "im3_low_dbfs": -71.650986,
+      "im3_high_dbfs": -71.695,
+      "image": "Part4_61dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -96.5,
+      "fundamental_powermean_dbfs": -25.7962162091034,
+      "im3_powermean_dbfs": -71.67293724221392,
+      "delta_db": 45.87672103311052,
+      "apparent_iip3_dbm": -73.56163948344474
+    },
+    {
+      "attenuation_db": 59,
+      "f1_dbfs": -23.977015,
+      "f2_dbfs": -23.982332,
+      "im3_low_dbfs": -70.049721,
+      "im3_high_dbfs": -70.116264,
+      "image": "Part4_59dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -94.5,
+      "fundamental_powermean_dbfs": -23.979672686309968,
+      "im3_powermean_dbfs": -70.0828650540008,
+      "delta_db": 46.10319236769084,
+      "apparent_iip3_dbm": -71.44840381615458
+    },
+    {
+      "attenuation_db": 57,
+      "f1_dbfs": -23.291973,
+      "f2_dbfs": -23.296755,
+      "im3_low_dbfs": -69.300903,
+      "im3_high_dbfs": -69.335075,
+      "image": "Part4_57dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -92.5,
+      "fundamental_powermean_dbfs": -23.294363341819782,
+      "im3_powermean_dbfs": -69.31795539024267,
+      "delta_db": 46.02359204842289,
+      "apparent_iip3_dbm": -69.48820397578855
+    },
+    {
+      "attenuation_db": 55,
+      "f1_dbfs": -18.824711,
+      "f2_dbfs": -18.829517,
+      "im3_low_dbfs": -64.903999,
+      "im3_high_dbfs": -64.913033,
+      "image": "Part4_55dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -90.5,
+      "fundamental_powermean_dbfs": -18.82711333519663,
+      "im3_powermean_dbfs": -64.90851365098497,
+      "delta_db": 46.08140031578834,
+      "apparent_iip3_dbm": -67.45929984210582
+    },
+    {
+      "attenuation_db": 53,
+      "f1_dbfs": -16.724062,
+      "f2_dbfs": -16.72933,
+      "im3_low_dbfs": -62.883698,
+      "im3_high_dbfs": -62.929367,
+      "image": "Part4_53dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -88.5,
+      "fundamental_powermean_dbfs": -16.726695201238346,
+      "im3_powermean_dbfs": -62.906472470226475,
+      "delta_db": 46.17977726898813,
+      "apparent_iip3_dbm": -65.41011136550594
+    },
+    {
+      "attenuation_db": 51,
+      "f1_dbfs": -14.153978,
+      "f2_dbfs": -14.15863,
+      "im3_low_dbfs": -60.417122,
+      "im3_high_dbfs": -60.386513,
+      "image": "Part4_51dB_attenuation.png",
+      "input_nominal_per_tone_dbm": -86.5,
+      "fundamental_powermean_dbfs": -14.156303377118986,
+      "im3_powermean_dbfs": -60.40179053359296,
+      "delta_db": 46.24548715647397,
+      "apparent_iip3_dbm": -63.377256421763015
+    }
+  ],
+  "fundamental_slopes": [
+    0.9838582916666674,
+    0.9838720357142864
+  ],
+  "im3_slopes": [
+    0.9535888749999997,
+    0.9564277142857153
+  ],
+  "im3_slopes_noise_subtracted": [
+    0.9794974924203493,
+    0.9825381332268394
+  ],
+  "delta_mean_db": 46.030010850396806,
+  "delta_std_across_levels_db": 0.14042618052253902,
+  "max_tone_imbalance_db": 0.005316999999998018,
+  "minimum_im3_margin_above_floor_db": 10.630424000000005,
+  "antenna": {
+    "samples": 131,
+    "step_mhz": 20.0,
+    "peak_mhz": 1660.0,
+    "peak_db_relative": -28.103956269475397,
+    "link_3db": {
+      "drop_db": 3,
+      "threshold_db": -31.103956269475397,
+      "f_low_mhz": 1605.647896422348,
+      "f_high_mhz": 1719.1055635286725,
+      "bandwidth_mhz": 113.4576671063246,
+      "bracket_low_mhz": [
+        1600.0,
+        1620.0
+      ],
+      "bracket_high_mhz": [
+        1700.0,
+        1720.0
+      ]
+    },
+    "pair_6db": {
+      "drop_db": 6,
+      "threshold_db": -34.1039562694754,
+      "f_low_mhz": 1557.2946780345833,
+      "f_high_mhz": 1752.9791816340987,
+      "bandwidth_mhz": 195.68450359951544,
+      "bracket_low_mhz": [
+        1540.0,
+        1560.0
+      ],
+      "bracket_high_mhz": [
+        1740.0,
+        1760.0
+      ]
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "repository_base_commit": "ca0edb21a7af98a9427a3449f345126a7f4bc276",
+  "noise_setting_note": "User confirmed the lab guide default setting in this conversation; ENR rounded to 15 dB.",
+  "inputs": [
+    {
+      "path": "experiments/lab02/post/images/Part1_N_off_gain29.7.png",
+      "sha256": "60207001db6b81972a1a9ee758e82111e0f98de7f7c410dee1292e06a4c2b8bc",
+      "bytes": 60640
+    },
+    {
+      "path": "experiments/lab02/post/images/Part1_N_off_gain40.2.png",
+      "sha256": "e75f43a471d6e85bee167b2fdd0b848be2bc9b52c7c0675ef7166e84aff2891a",
+      "bytes": 59594
+    },
+    {
+      "path": "experiments/lab02/post/images/Part1_N_off_gain49.6.png",
+      "sha256": "b39d35760bfbb9e7fe7a101170b5e1701575e11f7a580bbcae92ce5a9692083d",
+      "bytes": 69495
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_off_gain29.7.png",
+      "sha256": "fcff62276b49454bb88fcfaac652ed69df7c45fba4ff16e3dd0b70bd08382550",
+      "bytes": 64400
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_off_gain40.2.png",
+      "sha256": "360531d1da11f5f8ecb7a535563f26b3bbe98c22063168acc2ad14bac328dc0e",
+      "bytes": 58338
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_off_gain49.6.png",
+      "sha256": "26349ae3cf0ce4b07b1a1b010f744bc0685ac9cf13109648130e30b062ea2be1",
+      "bytes": 65201
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_on_gain29.7.png",
+      "sha256": "e14c9a422ad414d784bfbb9ed996a0404341da630824d57cf79a300e913358a7",
+      "bytes": 67882
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_on_gain40.2.png",
+      "sha256": "d71f5f99527e3d89cf020dc0a186b4e4ab53c349ac3c4af5876c277948ab9a27",
+      "bytes": 63858
+    },
+    {
+      "path": "experiments/lab02/post/images/Part2_N_on_gain49.6.png",
+      "sha256": "90e05ee82624ae79029b2900d6e2d1a40cb63dcc189dd14e58ab054bf5174972",
+      "bytes": 68189
+    },
+    {
+      "path": "experiments/lab02/post/images/Part3_60dB_attenuation.png",
+      "sha256": "43b54d5ca56b217d2503a93faa1bdf62405ef2c610e97db8bfe4b664499e660b",
+      "bytes": 70743
+    },
+    {
+      "path": "experiments/lab02/post/images/Part3_topDiagram.png",
+      "sha256": "4ae5f4a08630bad6a400b80a4d86668f594f85e24207f04ea0f361449f5c8e24",
+      "bytes": 54155
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_51dB_attenuation.png",
+      "sha256": "743881ce71a45cca2531f28d93dd4f3f929c05ed13b176dabdc7f3daef2622f6",
+      "bytes": 60777
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_53dB_attenuation.png",
+      "sha256": "eaf28fe9202c6644e70750902f195a0bf47aad87fc0e4cfdb3d42bf3dd58de26",
+      "bytes": 59689
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_55dB_attenuation.png",
+      "sha256": "fc172c07299e051a4da9afddad645deace496037d2a8b3fecf76b62d5a94396b",
+      "bytes": 63165
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_57dB_attenuation.png",
+      "sha256": "e8e0a3b279b968bb9b9aba9ef07a9d73ffa9dd6d71529c1f8f4334f5126bbc54",
+      "bytes": 66833
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_59dB_attenuation.png",
+      "sha256": "1c380d5960b9e9342d4d14bbacad931b46e3b146569a34b5fbca9356c5448ee1",
+      "bytes": 60219
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_61dB_attenuation.png",
+      "sha256": "99d5f0df9a4112605c972b1bd0cea7e8a51b5d2e7d62420202b7c2a34dfab421",
+      "bytes": 48119
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_63dB_attenuation.png",
+      "sha256": "c6258818dc9072210cbebb69a2ac232955e2904a6e16d40f12de9b68ab56074d",
+      "bytes": 57755
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_65dB_attenuation.png",
+      "sha256": "4182be9f6da58c02794e6b157dd11bb395689e94e2c77f20d9a7627e62c5438e",
+      "bytes": 59535
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_noise_floor.png",
+      "sha256": "62257d66f9f808c433c08663f129e60ca165d27aa29cdcee217b44a965cdf3b7",
+      "bytes": 59392
+    },
+    {
+      "path": "experiments/lab02/post/images/Part4_topDiagram.png",
+      "sha256": "ad4a31aab56a2aeead2c0e4ffc4e82b37418425e6be002680e3e15a12dc7163e",
+      "bytes": 76797
+    },
+    {
+      "path": "experiments/lab02/post/images/Part5.png",
+      "sha256": "2732dd418b6b8459c9879843f7a55d6c4c1507b7aa0575a8874977163a8095a4",
+      "bytes": 57791
+    },
+    {
+      "path": "experiments/lab02/post/data/P1db.xlsx",
+      "sha256": "73c02596ab149db66581b4c150228578958303a33562b846c9a305cc392ce8fb",
+      "bytes": 14245
+    },
+    {
+      "path": "experiments/lab02/post/data/Part5_antenna_response.csv",
+      "sha256": "a3c6e7c03627ee00eef71dc06fc7d2ca046954eb24fb439bed58270b3817e3f5",
+      "bytes": 6860
+    },
+    {
+      "path": "experiments/lab02/post/data/lab_02_nf.pdf",
+      "sha256": "b3d4d885ed96af9ff7ec0a38d74b3c840f23542a9320001893412539c43ec55c",
+      "bytes": 145989
+    },
+    {
+      "path": "experiments/lab02/post/data/readings.json",
+      "sha256": "f44fec2b259fb001cc97673a9a614f237ee39ca7704e34983c3844644ec56b89",
+      "bytes": 3691
+    }
+  ],
+  "outputs": {
+    "single_tone_data": "experiments/lab02/post/data/P1db.xlsx",
+    "noise_and_two_tone_transcription": "experiments/lab02/post/data/readings.json",
+    "antenna_data": "experiments/lab02/post/data/Part5_antenna_response.csv",
+    "calculations": "tools/lab02_analyze.py",
+    "narrative": "tools/lab02_write_report.py",
+    "pdf": "tools/lab02_build_pdf.py"
+  }
+}

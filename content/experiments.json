@@ -32,5 +32,24 @@
       "status": "گزارش تصاویر؛ تحلیل IQ در انتظار داده",
       "date": "تاریخ ثبت تحویل هنوز اعلام نشده"
     }
+  },
+  {
+    "id": "lab02",
+    "number": 2,
+    "title": "عدد نویز و پارامترهای RF",
+    "subtitle": "Noise Figure, P1dB and IIP3",
+    "session_date": "—",
+    "pre": {
+      "publish": true,
+      "external": true,
+      "status": "پیش‌گزارش",
+      "date": "تکالیف ۱ تا ۶"
+    },
+    "post": {
+      "publish": true,
+      "external": true,
+      "status": "گزارش و تحلیل داده‌های جلسه",
+      "date": "HTML، PDF و داده‌های اندازه‌گیری"
+    }
   }
 ]

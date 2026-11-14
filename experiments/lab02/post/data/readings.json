@@ -1,0 +1,131 @@
+{
+  "provenance": {
+    "noise": "400 kHz noise power meters, visually verified against the original PNGs",
+    "two_tone": "10 kHz tone power meters, visually verified against the original PNGs",
+    "attenuation": "positive magnitude from image filename; topDiagram separate capture is 65.5 dB",
+    "noise_tx_setting": "Default guide setting confirmed by the user in this conversation",
+    "nominal_enr_db": 15.0,
+    "nominal_tone_input_formula_dbm": "-35.5 - attenuation_db",
+    "gfs_reference_db": 20.0,
+    "gfs_reference_gain_db": 40.2,
+    "noise_bandwidth_hz": 400000,
+    "two_tone_gain_db": 40.2,
+    "center_frequency_hz": 434000000
+  },
+  "noise": [
+    {
+      "gain_db": 29.7,
+      "open_dbfs": -73.363823,
+      "off_dbfs": -72.307777,
+      "on_dbfs": -49.186287,
+      "open_image": "Part1_N_off_gain29.7.png",
+      "off_image": "Part2_N_off_gain29.7.png",
+      "on_image": "Part2_N_on_gain29.7.png"
+    },
+    {
+      "gain_db": 40.2,
+      "open_dbfs": -74.248352,
+      "off_dbfs": -67.706673,
+      "on_dbfs": -66.363701,
+      "open_image": "Part1_N_off_gain40.2.png",
+      "off_image": "Part2_N_off_gain40.2.png",
+      "on_image": "Part2_N_on_gain40.2.png"
+    },
+    {
+      "gain_db": 49.6,
+      "open_dbfs": -66.232353,
+      "off_dbfs": -58.960712,
+      "on_dbfs": -30.582338,
+      "open_image": "Part1_N_off_gain49.6.png",
+      "off_image": "Part2_N_off_gain49.6.png",
+      "on_image": "Part2_N_on_gain49.6.png"
+    }
+  ],
+  "two_tone": [
+    {
+      "attenuation_db": 65,
+      "f1_dbfs": -27.925411,
+      "f2_dbfs": -27.930531,
+      "im3_low_dbfs": -73.734848,
+      "im3_high_dbfs": -73.775261,
+      "image": "Part4_65dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 63,
+      "f1_dbfs": -26.183355,
+      "f2_dbfs": -26.188061,
+      "im3_low_dbfs": -72.081512,
+      "im3_high_dbfs": -72.095673,
+      "image": "Part4_63dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 61,
+      "f1_dbfs": -25.793596,
+      "f2_dbfs": -25.798838,
+      "im3_low_dbfs": -71.650986,
+      "im3_high_dbfs": -71.695,
+      "image": "Part4_61dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 59,
+      "f1_dbfs": -23.977015,
+      "f2_dbfs": -23.982332,
+      "im3_low_dbfs": -70.049721,
+      "im3_high_dbfs": -70.116264,
+      "image": "Part4_59dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 57,
+      "f1_dbfs": -23.291973,
+      "f2_dbfs": -23.296755,
+      "im3_low_dbfs": -69.300903,
+      "im3_high_dbfs": -69.335075,
+      "image": "Part4_57dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 55,
+      "f1_dbfs": -18.824711,
+      "f2_dbfs": -18.829517,
+      "im3_low_dbfs": -64.903999,
+      "im3_high_dbfs": -64.913033,
+      "image": "Part4_55dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 53,
+      "f1_dbfs": -16.724062,
+      "f2_dbfs": -16.72933,
+      "im3_low_dbfs": -62.883698,
+      "im3_high_dbfs": -62.929367,
+      "image": "Part4_53dB_attenuation.png"
+    },
+    {
+      "attenuation_db": 51,
+      "f1_dbfs": -14.153978,
+      "f2_dbfs": -14.15863,
+      "im3_low_dbfs": -60.417122,
+      "im3_high_dbfs": -60.386513,
+      "image": "Part4_51dB_attenuation.png"
+    }
+  ],
+  "two_tone_floor_dbfs": [
+    -84.468346,
+    -84.529747,
+    -84.400925,
+    -84.405685
+  ],
+  "separate_captures": {
+    "Part4_topDiagram.png": {
+      "attenuation_db": 65.5,
+      "gain_db": 40.2,
+      "f1_dbfs": -27.059708,
+      "f2_dbfs": -27.064966,
+      "im3_low_dbfs": -72.853874,
+      "im3_high_dbfs": -72.921707
+    },
+    "Part3_60dB_attenuation.png": {
+      "attenuation_db": 60,
+      "f1_dbfs": -22.349678,
+      "note": "Separate screenshot, not averaged into the workbook sweep."
+    }
+  }
+}
