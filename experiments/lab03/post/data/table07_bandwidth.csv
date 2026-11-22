@@ -1,0 +1,3 @@
+﻿fm_hz,dev_hz,beta,B_carson_hz,B20_screenshot_hz,B99_bessel_theory_hz,B99_measured_hz,source,threshold_db_below_strongest_line
+1000,5000,5.0,12000,14000,12000,,Part3_7_fm=1000_dev=5000_tx.png,20
+3000,5000,1.6666666666666667,16000,18000,18000,,Part3_7_fm=3000_dev=5000_tx.png,20

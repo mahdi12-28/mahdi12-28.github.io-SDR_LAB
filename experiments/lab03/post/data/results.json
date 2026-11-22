@@ -1,0 +1,158 @@
+{
+  "broadcast_cnr_db_conditional_equal_gain_bandwidth": -4.530875411981416,
+  "broadcast_offset_ppm_apparent": 14.179002544444444,
+  "fine_tuning_magnitude_ppm": 15.0,
+  "cable_cnr_db_conditional_equal_gain_bandwidth": 30.814311071278656,
+  "audio_gain_change_db": 6.020599913279624,
+  "fft_bin_hz_4096": 58.59375,
+  "fft_bin_hz_1024": 234.375,
+  "bessel_deviation_roots_hz_at_fm_1000": [
+    2404.8255576957727,
+    5520.07811028631
+  ],
+  "bandwidth": [
+    {
+      "fm_hz": 1000,
+      "dev_hz": 5000,
+      "beta": 5.0,
+      "B_carson_hz": 12000,
+      "B20_screenshot_hz": 14000,
+      "B99_bessel_theory_hz": 12000,
+      "B99_measured_hz": null,
+      "source": "Part3_7_fm=1000_dev=5000_tx.png",
+      "threshold_db_below_strongest_line": 20
+    },
+    {
+      "fm_hz": 3000,
+      "dev_hz": 5000,
+      "beta": 1.6666666666666667,
+      "B_carson_hz": 16000,
+      "B20_screenshot_hz": 18000,
+      "B99_bessel_theory_hz": 18000,
+      "B99_measured_hz": null,
+      "source": "Part3_7_fm=3000_dev=5000_tx.png",
+      "threshold_db_below_strongest_line": 20
+    }
+  ],
+  "pll": [
+    {
+      "pll_bw": 0.5,
+      "BL_khz_manual_convention": 127.2,
+      "quality": "خوب",
+      "source": "Part2_PLL_0.5.png",
+      "blue_pilot_db": -33.94495412844037,
+      "blue_noise17_db": -53.038990825688074,
+      "blue_pilot_margin_db": 19.094036697247702,
+      "red_pilot_db": -34.403669724770644,
+      "red_noise17_db": -54.58715596330275,
+      "red_pilot_margin_db": 20.183486238532105,
+      "delta_pilot_pll_minus_quad_db": 0.0
+    },
+    {
+      "pll_bw": 0.3,
+      "BL_khz_manual_convention": 76.32000000000001,
+      "quality": "خوب",
+      "source": "Part2_PLL_0.3.png",
+      "blue_pilot_db": -37.772567409144195,
+      "blue_noise17_db": -64.58968347010551,
+      "blue_pilot_margin_db": 26.817116060961318,
+      "red_pilot_db": -38.827667057444316,
+      "red_noise17_db": -66.15767878077375,
+      "red_pilot_margin_db": 27.330011723329434,
+      "delta_pilot_pll_minus_quad_db": -1.0550996483001214
+    },
+    {
+      "pll_bw": 0.15,
+      "BL_khz_manual_convention": 38.160000000000004,
+      "quality": "خوب",
+      "source": "Part2_PLL_0.15.png",
+      "blue_pilot_db": -38.265179677819084,
+      "blue_noise17_db": -68.46964064436183,
+      "blue_pilot_margin_db": 30.204460966542747,
+      "red_pilot_db": -47.18711276332094,
+      "red_noise17_db": -76.2453531598513,
+      "red_pilot_margin_db": 29.058240396530366,
+      "delta_pilot_pll_minus_quad_db": -8.921933085501855
+    },
+    {
+      "pll_bw": 0.08,
+      "BL_khz_manual_convention": 20.352,
+      "quality": "متوسط",
+      "source": "Part2_PLL_0.08.png",
+      "blue_pilot_db": -37.76951672862454,
+      "blue_noise17_db": -68.12887236679057,
+      "blue_pilot_margin_db": 30.359355638166036,
+      "red_pilot_db": -57.59603469640644,
+      "red_noise17_db": -85.72490706319702,
+      "red_pilot_margin_db": 28.12887236679058,
+      "delta_pilot_pll_minus_quad_db": -19.826517967781903
+    },
+    {
+      "pll_bw": 0.04,
+      "BL_khz_manual_convention": 10.176,
+      "quality": "متوسط رو به پایین",
+      "source": "Part2_PLL_0.04.png",
+      "blue_pilot_db": -37.99498746867168,
+      "blue_noise17_db": -66.56641604010025,
+      "blue_pilot_margin_db": 28.57142857142857,
+      "red_pilot_db": -71.91311612364244,
+      "red_noise17_db": -91.62907268170426,
+      "red_pilot_margin_db": 19.71595655806182,
+      "delta_pilot_pll_minus_quad_db": -33.91812865497076
+    },
+    {
+      "pll_bw": 0.02,
+      "BL_khz_manual_convention": 5.088,
+      "quality": "بسیار ضعیف؛ بازیابی مفید صدا از بین رفت",
+      "source": "Part2_PLL_0.02.png",
+      "blue_pilot_db": -37.96610169491525,
+      "blue_noise17_db": -67.54237288135593,
+      "blue_pilot_margin_db": 29.576271186440678,
+      "red_pilot_db": -86.27118644067797,
+      "red_noise17_db": -98.79237288135593,
+      "red_pilot_margin_db": 12.521186440677965,
+      "delta_pilot_pll_minus_quad_db": -48.30508474576271
+    }
+  ],
+  "weak_signal": [
+    {
+      "rf_gain_db": 40,
+      "channel_power_dbfs": -63.996273,
+      "quality": "خوب",
+      "source": "Part2_3_gain_40.png",
+      "blue_pilot_db": -40.0,
+      "blue_noise17_db": -54.45663010967099,
+      "blue_pilot_margin_db": 14.45663010967099,
+      "red_pilot_db": -57.14855433698904,
+      "red_noise17_db": -74.17248255234297,
+      "red_pilot_margin_db": 17.023928215353934,
+      "delta_pilot_pll_minus_quad_db": -17.148554336989037
+    },
+    {
+      "rf_gain_db": 27,
+      "channel_power_dbfs": -74.915482,
+      "quality": "لب مرزی",
+      "source": "Part2_3_gain_27.png",
+      "blue_pilot_db": -44.17910447761194,
+      "blue_noise17_db": -48.258706467661696,
+      "blue_pilot_margin_db": 4.079601990049753,
+      "red_pilot_db": -61.09452736318408,
+      "red_noise17_db": -68.88059701492537,
+      "red_pilot_margin_db": 7.786069651741293,
+      "delta_pilot_pll_minus_quad_db": -16.915422885572134
+    },
+    {
+      "rf_gain_db": 20,
+      "channel_power_dbfs": -77.269608,
+      "quality": "نویز غالب؛ صدا قابل تشخیص نبود",
+      "source": "Part2_3_gain_20.png",
+      "blue_pilot_db": -43.98009950248756,
+      "blue_noise17_db": -46.01990049751244,
+      "blue_pilot_margin_db": 2.0398009950248763,
+      "red_pilot_db": -64.87562189054727,
+      "red_noise17_db": -69.25373134328358,
+      "red_pilot_margin_db": 4.378109452736311,
+      "delta_pilot_pll_minus_quad_db": -20.895522388059703
+    }
+  ]
+}

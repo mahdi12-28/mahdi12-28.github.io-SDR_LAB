@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="پیش‌گزارش کامل آزمایش سوم SDR: FM، آشکارسازی همدوس و ناهمدوس، محاسبهٔ کارسون، طراحی GNU Radio، جدول پیش‌بینی و ایمنی پیوند کابلی." />
+  <title>پیش‌گزارش آزمایش سوم | FM، استریو و RDS</title>
+  <meta name="color-scheme" content="light" />
+  <script>
+    window.MathJax = {tex:{inlineMath:[['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']]},
+                      options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},
+                      chtml:{scale:0.96}};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <style>
+    :root {--ink:#173247;--muted:#607381;--border:#dce7ec;--brand:#007c8d;--branddeep:#00495c;--paper:#fff;--soft:#f6fafb;--bg:#f2f7f8;--accent:#e7f5f6}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;overflow-x:clip}
+    body{margin:0;overflow-x:hidden;color:var(--ink);background:var(--bg);font-family:"Vazirmatn","Noto Sans Arabic","Tahoma",Arial,sans-serif;font-size:15px;line-height:2.03;text-align:right}
+    a{color:#006f84;text-decoration-thickness:1px;text-underline-offset:3px}
+    a:hover{color:#004856}
+    .site-header{background:linear-gradient(128deg,#06354c 0%,#075469 56%,#127b87 100%);color:#fff;padding:65px max(24px,calc((100vw - 1100px)/2)) 57px;position:relative;overflow:hidden}
+    .site-header:after{content:"";position:absolute;width:340px;height:340px;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-90px;top:-130px;box-shadow:0 0 0 65px rgba(255,255,255,.035),0 0 0 135px rgba(255,255,255,.025)}
+    .kicker{font-size:12px;letter-spacing:.1em;font-weight:700;color:#bbf0ef;margin:0 0 16px}
+    .site-header h1{font-size:clamp(25px,4.5vw,41px);line-height:1.7;letter-spacing:-.02em;max-width:950px;margin:0 0 15px;color:#fff}
+    .site-header p{font-size:15px;line-height:2;max-width:780px;margin:0;color:#d8e9ef}
+    .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+    .meta span{display:inline-flex;background:rgba(255,255,255,.095);border:1px solid rgba(255,255,255,.22);padding:5px 12px;border-radius:40px;font-size:12px;color:#e5f5f6}
+    .container{max-width:1140px;margin:0 auto;padding:32px 20px 70px;display:grid;grid-template-columns:235px minmax(0,1fr);gap:25px;align-items:start}
+    .contents{background:white;border:1px solid var(--border);border-radius:17px;padding:22px 17px;position:sticky;top:22px;box-shadow:0 5px 18px rgba(10,53,70,.04)}
+    .contents strong{display:block;font-size:14px;color:var(--branddeep);margin-bottom:13px}
+    .contents a{display:block;padding:7px 10px;margin:1px 0;border-radius:9px;color:#355367;text-decoration:none;font-size:12px;line-height:2}
+    .contents a:hover{background:var(--soft);color:#006f84}
+    .doc{background:var(--paper);border:1px solid var(--border);border-radius:20px;box-shadow:0 7px 25px rgba(10,53,70,.045);padding:36px clamp(20px,3.2vw,52px);min-width:0}
+    .doc>h1{display:none}
+    .doc>p:first-of-type{font-size:13px;color:#607988}
+    .doc h2{margin:54px 0 22px;font-size:22px;line-height:1.8;color:#074b5f;border-bottom:2px solid #e1edef;padding-bottom:12px;scroll-margin-top:25px}
+    .doc h2:first-of-type{margin-top:26px}
+    .doc h3{font-size:17px;line-height:1.9;color:#11647a;margin:35px 0 14px;scroll-margin-top:25px}
+    .doc p{margin:14px 0}
+    .doc strong{color:#164859;font-weight:750}
+    .doc blockquote{margin:23px 0;background:#ecf7f7;border-right:4px solid #148d9b;padding:14px 20px;color:#174d5e;border-radius:8px 0 0 8px;font-size:13px}
+    .doc blockquote p{margin:0}
+    .doc hr{border:0;border-top:1px solid #e3edef;margin:45px 0 0}
+    .table-wrap{overflow-x:auto;margin:20px 0 27px;border:1px solid #d8e6ea;border-radius:11px;scrollbar-color:#adcad3 transparent}
+    table{border-collapse:collapse;font-size:13px;line-height:1.85;min-width:560px;width:100%;background:white}
+    th{background:#0b5368;color:#fff;font-weight:700;white-space:normal}
+    th,td{border-left:1px solid #e3edf0;padding:11px 13px;vertical-align:top}
+    th:last-child,td:last-child{border-left:0}
+    tbody tr:not(:last-child) td{border-bottom:1px solid #e4edf0}
+    tbody tr:nth-child(even) td{background:#f8fbfc}
+    .doc pre{margin:21px 0 28px;background:#092b3a;color:#d8edf0;padding:20px 23px;overflow-x:auto;border-radius:13px;direction:ltr;text-align:left;line-height:1.65;font-size:12px;border:1px solid #194457}
+    .doc code{font-family:"DejaVu Sans Mono",Consolas,monospace;font-size:.86em;direction:ltr;unicode-bidi:isolate}
+    .doc :not(pre)>code{background:#edf5f6;color:#0c6575;padding:2px 5px;border-radius:4px}
+    .doc .math{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:19px 0;padding:5px 0}
+    .doc .math mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+    .doc ol{padding-right:24px}
+    .doc li{padding-right:3px;margin:8px 0}
+    .doc table .math{display:inline-block;vertical-align:middle;margin:0}
+    .footer{font-size:12px;color:#6f858f;text-align:center;margin:16px auto 0}
+    .return{display:inline-block;color:#006a7c;text-decoration:none;font-size:13px;font-weight:650;margin-top:15px}
+    @media(max-width:930px){.container{display:block;max-width:840px}.contents{position:static;margin-bottom:20px;padding:18px}.contents .toclinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 8px}.doc{padding:27px 24px}.site-header{padding:52px 26px 45px}}
+    @media(max-width:520px){body{font-size:13.5px}.doc{padding:18px 17px;border-radius:15px}.container{padding:17px 10px 40px}.contents .toclinks{grid-template-columns:1fr}.doc h2{font-size:19px}.doc h3{font-size:15px}table{font-size:12px}.site-header{padding:38px 19px 38px}}
+    @media print{body{background:#fff;font-size:12px}.site-header{padding:23px 22px;background:#fff!important;color:#15394d;border-bottom:3px solid #176679}.site-header h1,.site-header p,.kicker{color:#15394d}.meta{display:none}.container{display:block;padding:0}.contents{display:none}.doc{padding:18px 14px;border:0;box-shadow:none}.doc h2{page-break-after:avoid;margin-top:27px}.doc h3{page-break-after:avoid}.table-wrap{overflow:visible;border:0}table{min-width:0;width:100%;font-size:10px}thead{display:table-header-group}tr{break-inside:avoid}.doc pre{white-space:pre-wrap;color:#111;background:#f4f6f6}.footer{display:none}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="kicker">SDR LABORATORY · PRE-LAB REPORT</div>
+  <h1>پیش‌گزارش آزمایش سوم<br>رادیوی FM، استریو و RDS</h1>
+  <p>جلسهٔ اول: آشکارسازی همدوس و ناهمدوس؛ پاسخ کامل تکالیف نظری و محاسبات طراحی به همراه جدول پیش‌بینی و ملاحظات ایمنی</p>
+  <div class="meta"><span>۵ تکلیف کامل</span><span>۶ پرسش تحلیلی</span><span>GNU Radio 3.10</span><span>ADALM-PLUTO</span></div>
+</header>
+<div class="container">
+ <nav class="contents" aria-label="فهرست بخش‌های پیش‌گزارش">
+   <strong>فهرست گزارش</strong>
+   <div class="toclinks">
+     <a href="#overview">فرض‌های طراحی</a>
+     <a href="#task-1">تکلیف ۱: خلاصهٔ منبع</a>
+     <a href="#task-2">تکلیف ۲: پرسش‌های نظری</a>
+     <a href="#task-3">تکلیف ۳: طراحی و محاسبات</a>
+     <a href="#task-4">تکلیف ۴: پیش‌بینی</a>
+     <a href="#task-5">تکلیف ۵: ریسک‌ها</a>
+     <a href="#implementation">آمادگی پیاده‌سازی</a>
+     <a href="#conclusion">نتیجه‌گیری</a>
+     <a href="#references">منابع</a>
+   </div>
+ </nav>
+ <main class="doc">
+ <h1>پیش‌گزارش آزمایش سوم — رادیوی FM، استریو و RDS</h1>
+<p><strong>آزمایشگاه رادیوی نرم‌افزار (SDR) | جلسهٔ اول: آشکارسازی همدوس و ناهمدوس FM</strong><br/>
+<strong>موضوع:</strong> مدولاسیون فرکانس، قاعدهٔ کارسون، مقایسهٔ آشکارسازها و طراحی زنجیرهٔ نمونه‌برداری در GNU Radio 3.10</p>
+<blockquote>
+<p><strong>چارچوب گزارش:</strong> پنج تکلیف پیش از جلسه شامل خلاصهٔ مطالعه، شش پاسخ تحلیلی، محاسبات طراحی، جدول پیش‌بینی و تحلیل ریسک است. اعداد این متن محاسبات نظری و مقادیر طراحی‌اند؛ ستون اندازه‌گیری برای تکمیل با نتایج جلسه در نظر گرفته شده است.</p>
+</blockquote>
+<h2 id="overview">نمای کلی و فرض‌های طراحی</h2>
+<p>این جلسه با ساخت زنجیرهٔ دریافت FM و مقایسهٔ <strong>Quadrature Demod</strong> و <strong>PLL Frequency Detector</strong> آغاز می‌شود. برای پیوند آزمایشگاهی از <strong>ADALM-PLUTO</strong> در مسیر کاملاً کابلی همراه با تضعیف‌گر استفاده می‌کنیم. فرض‌های عددی مبنا به شرح زیر است:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">کمیت</th>
+<th style="text-align:left">مقدار مبنا</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">نرخ نمونه‌برداری اولیه</td>
+<td style="text-align:left"><span class="math">\(f_{s,RF}=2.4\,\mathrm{MS/s}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">نرخ ورودی آشکارساز FM</td>
+<td style="text-align:left"><span class="math">\(f_{s,quad}=240\,\mathrm{kS/s}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">نرخ خروجی صوت</td>
+<td style="text-align:left"><span class="math">\(f_{s,audio}=48\,\mathrm{kS/s}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">انحراف فرکانسی WFM</td>
+<td style="text-align:left"><span class="math">\(\Delta f=75\,\mathrm{kHz}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">انحراف فرکانسی NBFM</td>
+<td style="text-align:left"><span class="math">\(\Delta f=5\,\mathrm{kHz}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">بیشینهٔ فرکانس پیام مونو / باریک‌باند</td>
+<td style="text-align:left"><span class="math">\(W=15\,\mathrm{kHz}\)</span> / <span class="math">\(3\,\mathrm{kHz}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">فرکانس مرجع محاسبهٔ خطای نوسان‌ساز</td>
+<td style="text-align:left"><span class="math">\(f_c=434\,\mathrm{MHz}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">توان اسمی بیشینهٔ TX برای محاسبات کابل</td>
+<td style="text-align:left"><span class="math">\(P_{TX,max}=+7\,\mathrm{dBm}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">تضعیف‌گر خارجی و تلفات کابل</td>
+<td style="text-align:left"><span class="math">\(30\,\mathrm{dB}\)</span> و <span class="math">\(0.5\,\mathrm{dB}\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+<h2 id="task-1">تکلیف ۱ — خلاصهٔ یک‌صفحه‌ای مطالعهٔ منبع</h2>
+<p>در مدولاسیون دامنه (<strong>AM</strong>) اطلاعات پیام در پوش سیگنال قرار دارد. بنابراین نویز یا تغییر بهره‌ای که دامنهٔ دریافتی را تغییر دهد، به‌طور مستقیم روی پیام آشکارشده اثر می‌گذارد. در مدولاسیون فرکانس (<strong>FM</strong>)، دامنهٔ سیگنال ایده‌آل ثابت است و اطلاعات به تغییرات فرکانس لحظه‌ای یا مشتق فاز منتقل می‌شود. در نتیجه، با محدودکردن دامنه و آشکارسازی تغییرات فاز می‌توان بخش مهمی از نویز دامنه‌ای را کاهش داد. این ویژگی علت اصلی مقاوم‌تر بودن FM نسبت به AM در شرایط مناسب دریافت است.</p>
+<p>علاوه بر حذف نوسان‌های دامنه، <strong>بهبود نسبت سیگنال به نویز خروجی</strong> در FM به انحراف فرکانسی وابسته است. برای سیگنال بالاتر از آستانه، افزایش <span class="math">\(\Delta f\)</span> تغییرات فرکانس متناظر با پیام را در مقایسه با اثر اغتشاش نویز بزرگ‌تر می‌کند. در مدل تک‌تن، با ثابت‌ماندن توان دریافتی و پهنای باند پیام، دوبرابرشدن انحراف تقریباً <strong>۶ دسی‌بل</strong> بهبود SNR خروجی ایجاد می‌کند. در عوض، طبق قاعدهٔ کارسون پهنای باند RF بزرگ‌تر می‌شود؛ بنابراین مقاومت بیشتر در برابر نویز با <strong>مصرف بیشتر طیف</strong> و افزایش توان لازم برای عبور از آستانهٔ دریافت همراه است.</p>
+<p>نویز خروجی تمایزگر FM پس از آشکارسازی در فرکانس‌های بالاتر صوت قوی‌تر می‌شود. برای جبران، فرستنده از <strong>پیش‌تأکید (pre-emphasis)</strong> برای تقویت نسبی مؤلفه‌های صوتی پُرفرکانس و گیرنده از <strong>واتأکید (de-emphasis)</strong> مکمل استفاده می‌کند. پاسخ ایده‌آل واتأکید از نوع پایین‌گذر مرتبهٔ اول است:</p>
+<div class="math" dir="ltr">$$
+H_{de}(f)=\frac{1}{1+j2\pi f\tau},\qquad f_1=\frac{1}{2\pi\tau}.
+$$</div>
+<p>برای <span class="math">\(\tau=50\,\mu s\)</span>، فرکانس شکست حدود <span class="math">\(3183\,\mathrm{Hz}\)</span> و برای <span class="math">\(\tau=75\,\mu s\)</span> حدود <span class="math">\(2122\,\mathrm{Hz}\)</span> است. انتخاب ثابت زمانی مطابق استاندارد فرستندهٔ دریافت‌شده انجام می‌شود؛ این انتخاب هم بر توازن طیفی صدا و هم بر کاهش نویز فرکانس‌های بالا اثر دارد.</p>
+<p>مزیت FM به <strong>شرط قرارداشتن بالاتر از آستانهٔ آشکارسازی</strong> معتبر است. در CNR بالا، اغتشاش فاز کوچک است و خروجی تمایزگر تقریباً با نویز ورودی رابطهٔ خطی دارد. با کاهش CNR، بردار نویز گاهی موجب جهش ناگهانی فاز و «کلیک» در سیگنال بازسازی‌شده می‌شود. در حوالی آستانه‌ای که در راهنما تقریباً <span class="math">\(10\,\mathrm{dB}\)</span> در نظر گرفته شده، کیفیت صدا می‌تواند به‌صورت ناگهانی افت کند؛ به این پدیده <strong>اثر آستانهٔ FM</strong> گفته می‌شود. آشکارساز مبتنی بر PLL با تنظیم مناسب پهنای باند حلقه می‌تواند بخشی از نویز را محدود کند، ولی باید به اندازهٔ کافی سریع باشد تا تغییرات پیام را نیز دنبال کند.</p>
+<p>جمع‌بندی اینکه <strong>FM با قرار دادن اطلاعات در فاز، امکان حذف نویز دامنه‌ای و بهبود SNR را فراهم می‌کند</strong>؛ هزینهٔ این مزیت پهنای باند بیشتر و رفتار آستانه‌ای در سیگنال‌های ضعیف است. عملکرد خوب در عمل حاصل انتخاب هماهنگ انحراف فرکانس، فیلتر کانال، روش آشکارسازی، پهنای حلقه و فیلتر واتأکید خواهد بود.</p>
+<hr/>
+<h2 id="task-2">تکلیف ۲ — پاسخ تحلیلی شش پرسش نظری</h2>
+<h3 id="q-21">۲-۱. استخراج طیف FM تک‌تن و محاسبهٔ کارسون</h3>
+<p>با فرض <span class="math">\(m(t)=\cos(2\pi f_m t)\)</span>، فرمول فاز سیگنال FM برابر است با:</p>
+<div class="math" dir="ltr">$$
+\begin{aligned}
+\varphi(t)&amp;=2\pi\Delta f\int_0^t\cos(2\pi f_m\tau)\,d\tau\\
+&amp;=\frac{\Delta f}{f_m}\sin(2\pi f_m t)=\beta\sin(2\pi f_m t),
+\end{aligned}
+$$</div>
+<p>که در آن <span class="math">\(\beta=\Delta f/f_m\)</span> شاخص مدولاسیون است. پس:</p>
+<div class="math" dir="ltr">$$
+s(t)=A\cos\!\left(2\pi f_c t+\beta\sin(2\pi f_m t)\right).
+$$</div>
+<p>با استفاده از بسط ژاکوبی–انگر:</p>
+<div class="math" dir="ltr">$$
+e^{j\beta\sin\theta}=\sum_{n=-\infty}^{\infty}J_n(\beta)e^{jn\theta},
+$$</div>
+<p>و گرفتن بخش حقیقی پوش مختلط روی حامل، رابطهٔ مورد نظر به دست می‌آید:</p>
+<div class="math" dir="ltr">$$
+\boxed{s(t)=A\sum_{n=-\infty}^{\infty}J_n(\beta)\cos\left[2\pi(f_c+n f_m)t\right].}
+$$</div>
+<p>بنابراین فاصلهٔ خطوط طیفی <span class="math">\(f_m\)</span> است و دامنهٔ هر خط با <span class="math">\(J_n(\beta)\)</span> تعیین می‌شود. طبق قاعدهٔ کارسون:</p>
+<p>$<span class="math">\(B_T\simeq2(\Delta f+f_{\max}).\)</span>$</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">وضعیت</th>
+<th style="text-align:left">جایگذاری</th>
+<th style="text-align:right">پهنای باند کارسون</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">پخش مونو تا ۱۵ kHz</td>
+<td style="text-align:left"><span class="math">\(2(75+15)\)</span> kHz</td>
+<td style="text-align:right"><strong>۱۸۰ kHz</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">مالتی‌پلکس استریو تا ۵۳ kHz</td>
+<td style="text-align:left"><span class="math">\(2(75+53)\)</span> kHz</td>
+<td style="text-align:right"><strong>۲۵۶ kHz</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">نمونهٔ NBFM با پیام ۳ kHz</td>
+<td style="text-align:left"><span class="math">\(2(5+3)\)</span> kHz</td>
+<td style="text-align:right"><strong>۱۶ kHz</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>نتیجه:</strong> در طرح‌های متداول با فاصلهٔ اسمی کانال <strong>۲۰۰ کیلوهرتز</strong>، تخمین مونو با مقدار ۱۸۰ کیلوهرتز نزدیک‌تر است (۲۰ کیلوهرتز اختلاف در برابر ۵۶ کیلوهرتز). فاصلهٔ تخصیص فرکانس در مناطق گوناگون می‌تواند بر شبکهٔ ۱۰۰ کیلوهرتزی یا مضارب آن نیز تعریف شود؛ پهنای باند کارسون، فاصلهٔ تخصیص کانال و ماسک طیفی دقیقاً یک کمیت نیستند. با افزودن RDS در ۵۷ کیلوهرتز، گسترهٔ MPX اندکی فراتر از مؤلفهٔ ۵۳ کیلوهرتزی می‌رود.</p>
+<h3 id="q-22">۲-۲. صفرشدن مؤلفهٔ حامل و کالیبراسیون <span class="math">\(\Delta f\)</span></h3>
+<p>دامنهٔ خط طیفی در <span class="math">\(f_c\)</span> متناسب با <span class="math">\(A J_0(\beta)\)</span> است. دو صفر نخست تابع بسل مرتبهٔ صفر عبارت‌اند از:</p>
+<p>$<span class="math">\(\beta_1\simeq2.4048256,\qquad\beta_2\simeq5.5200781.\)</span>$</p>
+<p>برای <span class="math">\(f_m=1\,\mathrm{kHz}\)</span> و <span class="math">\(\Delta f=\beta f_m\)</span> داریم:</p>
+<div class="math" dir="ltr">$$
+\boxed{\Delta f_1\simeq2404.83\,\mathrm{Hz}},\qquad
+\boxed{\Delta f_2\simeq5520.08\,\mathrm{Hz}}.
+$$</div>
+<p><strong>روش کالیبراسیون:</strong> یک تن آزمون پایدار با فرکانس ۱ کیلوهرتز و دامنهٔ معلوم به مدولاتور می‌دهیم و خط حامل را در نمایشگر طیف دنبال می‌کنیم. با افزایش تدریجی حساسیت یا دامنهٔ پیام، اولین نقطه‌ای که خط حامل به کمینهٔ عمیق می‌رسد متناظر با <span class="math">\(\Delta f\approx2.405\,\mathrm{kHz}\)</span> است؛ کمینهٔ دوم متناظر با <span class="math">\(5.520\,\mathrm{kHz}\)</span> خواهد بود. در سیستم خطی، از نسبت انحراف معلوم به دامنهٔ تنظیم‌شده می‌توان ضریب تبدیل فرستنده را تعیین و مقادیر دلخواه انحراف را تنظیم کرد. ثابت نگه‌داشتن فرکانس تن، سطح پیام و بهرهٔ مسیر، دقت این روش را افزایش می‌دهد.</p>
+<h3 id="q-23">۲-۳. درستی تمایزگر گسسته، بیشینهٔ انحراف و خطای مقیاس</h3>
+<p>در حوزهٔ گسسته، با <span class="math">\(x[n]=e^{j\varphi[n]}\)</span> و <span class="math">\(\varphi[n]-\varphi[n-1]=k_fm[n]\)</span> می‌نویسیم:</p>
+<div class="math" dir="ltr">$$
+\begin{aligned}
+x[n]x^*[n-1]&amp;=e^{j(\varphi[n]-\varphi[n-1])}=e^{jk_fm[n]},\\
+y[n]&amp;=\arg\!\left(x[n]x^*[n-1]\right).
+\end{aligned}
+$$</div>
+<p>تابع <span class="math">\(\arg\)</span> فاز را در بازهٔ اصلی <span class="math">\((-\pi,\pi]\)</span> برمی‌گرداند؛ بنابراین اگر <span class="math">\(|k_fm[n]|&lt;\pi\)</span>، بدون پیچش فاز خواهیم داشت:</p>
+<p>$<span class="math">\(y[n]=k_fm[n],\quad k_f=\frac{2\pi\Delta f}{f_s},\quad \widehat m[n]=\frac{f_s}{2\pi\Delta f}y[n]=m[n].\)</span>$</p>
+<p>برای پیام نرمال‌شدهٔ <span class="math">\(|m[n]|\le1\)</span>، شرط کافی عبارت است از <span class="math">\(\Delta f&lt;f_s/2\)</span>. در نرخ <span class="math">\(f_s=240\,\mathrm{kS/s}\)</span>:</p>
+<p>$<span class="math">\(\boxed{\Delta f_{\max}&lt;120\,\mathrm{kHz}.}\)</span>$</p>
+<p>این حد برای سیگنالِ مرکز‌شده است؛ خطای باقی‌ماندهٔ حامل هم به فرکانس لحظه‌ای افزوده می‌شود. اگر در پارامتر <strong>Gain</strong> گیرنده، انحراف را دو برابر مقدار واقعی قرار دهیم، بهرهٔ تمایزگر نصف خواهد شد و در ناحیهٔ بدون پیچش:</p>
+<p>$<span class="math">\(\widehat m[n]=\frac{\Delta f_{\mathrm{actual}}}{\Delta f_{\mathrm{set}}}m[n]=\frac12m[n].\)</span>$</p>
+<p>در نتیجه فرکانس‌های صوتی تغییر نمی‌کنند، ولی <strong>دامنهٔ خروجی به نصف</strong> (حدود <strong>۶٫۰۲ دسی‌بل کاهش سطح دامنه</strong>) می‌رسد.</p>
+<h3 id="q-24">۲-۴. مقایسهٔ تمایزگر و آشکارساز مبتنی بر PLL</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">معیار</th>
+<th style="text-align:left">Quadrature Demod (ناهمدوس)</th>
+<th style="text-align:left">PLL Frequency Detector (همدوس)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">پارامترهای طراحی</td>
+<td style="text-align:left">نرخ نمونه، انحراف اسمی و <span class="math">\(Gain=f_s/(2\pi\Delta f)\)</span></td>
+<td style="text-align:left">پهنای حلقه، بازهٔ min/max فاز در هر نمونه، مقدار اولیهٔ حلقه و ضریب مقیاس خروجی</td>
+</tr>
+<tr>
+<td style="text-align:left">بالاتر از آستانه</td>
+<td style="text-align:left">آشکارسازی مستقیم و دقیق اختلاف فاز؛ پهنای پیام با فیلترهای پس از آشکارسازی کنترل می‌شود</td>
+<td style="text-align:left">در حالت قفل، فرکانس لحظه‌ای را با خطای کم دنبال می‌کند؛ نویز خروجی وابسته به پهنای حلقه است</td>
+</tr>
+<tr>
+<td style="text-align:left">نزدیک آستانه</td>
+<td style="text-align:left">افزایش جهش‌های فاز و کلیک در نویز زیاد</td>
+<td style="text-align:left">با پهنای حلقهٔ متناسب با پیام می‌تواند بخشی از نویز و جهش‌ها را کاهش دهد؛ قفل نیز باید حفظ شود</td>
+</tr>
+<tr>
+<td style="text-align:left">خطای فرکانس حامل</td>
+<td style="text-align:left">خطا به صورت یک مؤلفهٔ DC در خروجی ظاهر می‌شود</td>
+<td style="text-align:left">تا وقتی در محدودهٔ جذب و دنبال‌کردن حلقه باشد، آفست را دنبال می‌کند؛ برآورد فرکانس خروجی همچنان شامل آفست DC است</td>
+</tr>
+<tr>
+<td style="text-align:left">بار محاسباتی</td>
+<td style="text-align:left">کم؛ تأخیر یک نمونه، مزدوج مختلط، ضرب و محاسبهٔ زاویه</td>
+<td style="text-align:left">بیشتر؛ آشکارساز خطا، فیلتر حلقه، NCO و به‌روزرسانی بازگشتی در هر نمونه</td>
+</tr>
+<tr>
+<td style="text-align:left">مزیت اصلی</td>
+<td style="text-align:left">سادگی و پاسخ سریع، بدون نیاز به قفل</td>
+<td style="text-align:left">امکان تنظیم مصالحهٔ نویز/دنبال‌کردن و بهبود دریافت نزدیک آستانه</td>
+</tr>
+</tbody>
+</table></div>
+<p>برای توضیح مزیت PLL در شاخص مدولاسیون بزرگ، باید دو پهنای باند را از هم جدا کنیم: پهنای باند RF تقریباً <span class="math">\(B_T=2(\Delta f+W)\)</span> رشد می‌کند، اما <strong>بیشینهٔ سرعت تغییرات پیام</strong> همچنان با <span class="math">\(W\)</span> تعیین می‌شود. در FM پهن‌باند می‌توان حلقه‌ای داشت که به‌اندازهٔ کافی سریع برای دنبال‌کردن پیام باشد و در عین حال <span class="math">\(B_L\ll B_T\)</span> باقی بماند. نسبت کوچک‌تر <span class="math">\(B_L/B_T\)</span> به حلقه اجازه می‌دهد نویز خارج از باند مؤثر دنبال‌کردن را محدود کند؛ ازاین‌رو مزیت احتمالی PLL نسبت به تمایزگر نزدیک آستانه با افزایش <span class="math">\(\beta\)</span> بیشتر می‌شود. این مزیت به پایداری قفل و انتخاب صحیح پهنای حلقه وابسته است.</p>
+<h3 id="q-25">۲-۵. بهبود FM، پهنای باند و توان لازم در آستانه</h3>
+<p>طبق رابطهٔ راهنما و با تعریف <span class="math">\(CNR=P_c/(N_0 B_T)\)</span>:</p>
+<div class="math" dir="ltr">$$
+SNR_o=\frac{3}{2}\left(\frac{\Delta f}{W}\right)^2\frac{B_T}{W}\,CNR
+=\frac{3}{2}\left(\frac{\Delta f}{W}\right)^2\frac{P_c}{N_0 W}.
+$$</div>
+<p>در <strong>توان حامل دریافتی ثابت</strong> و <span class="math">\(W\)</span> ثابت، عامل <span class="math">\(B_T\)</span> حذف می‌شود؛ بنابراین:</p>
+<div class="math" dir="ltr">$$
+\frac{SNR_{o,2}}{SNR_{o,1}}=\left(\frac{2\Delta f}{\Delta f}\right)^2=4
+\quad\Longrightarrow\quad
+\boxed{\Delta SNR_o=10\log_{10}4\simeq+6.02\,\mathrm{dB}.}
+$$</div>
+<p>با این حال پهنای کارسون از <span class="math">\(2(\Delta f+W)\)</span> به <span class="math">\(2(2\Delta f+W)\)</span> افزایش می‌یابد. برای حفظ <strong>CNR آستانهٔ ۱۰ دسی‌بل</strong>، توان دریافتی لازم متناسب با <span class="math">\(B_T\)</span> رشد می‌کند:</p>
+<div class="math" dir="ltr">$$
+\Delta P_{c,thr}=10\log_{10}\!\left(\frac{2\Delta f+W}{\Delta f+W}\right).
+$$</div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">حالت</th>
+<th style="text-align:right"><span class="math">\(B_{T,1}\)</span></th>
+<th style="text-align:right"><span class="math">\(B_{T,2}\)</span></th>
+<th style="text-align:right">افزایش توان آستانه</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">NBFM، <span class="math">\(\Delta f:5\to10\)</span> و <span class="math">\(W=3\)</span> kHz</td>
+<td style="text-align:right">۱۶ kHz</td>
+<td style="text-align:right">۲۶ kHz</td>
+<td style="text-align:right"><strong>۲٫۱۱ dB</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">WFM مونو، <span class="math">\(\Delta f:75\to150\)</span> و <span class="math">\(W=15\)</span> kHz</td>
+<td style="text-align:right">۱۸۰ kHz</td>
+<td style="text-align:right">۳۳۰ kHz</td>
+<td style="text-align:right"><strong>۲٫۶۳ dB</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>پس در ناحیهٔ بالای آستانه، با دوبرابر کردن انحراف <strong>حدود ۶ دسی‌بل SNR بهتر</strong> انتظار داریم، اما برای ثابت نگه‌داشتن CNR آستانه باید توان ورودی بیشتری فراهم شود. روابط بهبود فوق برای ناحیهٔ بالای آستانه‌اند و به خودی خود رفتار غیرخطی نزدیک آستانه را توصیف نمی‌کنند.</p>
+<h3 id="q-26">۲-۶. اثر خطای فرکانس حامل و محاسبهٔ ۳۰ ppm</h3>
+<p>اگر فرکانس مرکز سیگنال به اندازهٔ <span class="math">\(\delta f\)</span> از تنظیم گیرنده جابه‌جا باشد:</p>
+<div class="math" dir="ltr">$$
+x[n]=\exp\!\left(j\left[2\pi\delta f\frac{n}{f_s}+\varphi_m[n]\right]\right).
+$$</div>
+<p>در ناحیهٔ بدون پیچش، خروجی تمایزگر قبل از اعمال Gain برابر است با:</p>
+<p>$<span class="math">\(y[n]=\frac{2\pi}{f_s}\big(\delta f+\Delta f\,m[n]\big).\)</span>$</p>
+<p>پس پس از ضرب در <span class="math">\(f_s/(2\pi\Delta f)\)</span>:</p>
+<p>$<span class="math">\(\boxed{\widehat m[n]=m[n]+\frac{\delta f}{\Delta f}.}\)</span>$</p>
+<p>این جملهٔ اضافه یک <strong>آفست DC</strong> است که می‌توان پس از آشکارسازی حذف کرد؛ اما حذف DC پس از آشکارسازی به‌تنهایی مشکل ردشدن سیگنال از فیلتر باریک RF را حل نمی‌کند.</p>
+<p>اگر مجموع خطای فرکانسی فرستنده و گیرنده <span class="math">\(30\,\mathrm{ppm}\)</span> باشد، در <span class="math">\(434\,\mathrm{MHz}\)</span> داریم:</p>
+<div class="math" dir="ltr">$$
+\boxed{\delta f=434\times10^6\times30\times10^{-6}=13020\,\mathrm{Hz}=13.02\,\mathrm{kHz}.}
+$$</div>
+<p>برای NBFM با <span class="math">\(\Delta f=5\,\mathrm{kHz}\)</span>، آفست نرمال‌شدهٔ تمایزگر <span class="math">\(\delta f/\Delta f=2.604\)</span> است. چون پهنای کارسون کانال <span class="math">\(16\,\mathrm{kHz}\)</span> و نیم‌پهنای آن حدود <span class="math">\(8\,\mathrm{kHz}\)</span> است، جابه‌جایی <span class="math">\(13.02\,\mathrm{kHz}\)</span> می‌تواند بخش مهمی از سیگنال را <strong>خارج از ناحیهٔ عبور فیلتر کانال</strong> قرار دهد. راهکار، تنظیم مرکز فرکانس / اصلاح آفست با Rotator یا Frequency Xlating FIR <strong>پیش از فیلتر باریک</strong> است.</p>
+<hr/>
+<h2 id="task-3">تکلیف ۳ — جدول محاسبات طراحی</h2>
+<h3 id="design-31">۳-۱. زنجیرهٔ نرخ نمونه‌برداری</h3>
+<p>مسیر مونو برای هر دو حالت WFM و NBFM به‌صورت زیر طراحی می‌شود:</p>
+<pre><code class="language-text" dir="ltr">ADALM-PLUTO RX (complex IQ, 2.4 MS/s)
+    │  Frequency Xlating FIR / channel LPF
+    └── decimation = 10  → 240 kS/s (complex)
+                              │
+                     ┌────────┴─────────┐
+                     │                  │
+              Quadrature Demod    PLL Frequency Detector
+                     └────────┬─────────┘
+                              │ Selector → DC Blocker
+                              │ Audio LPF + deemphasis
+                              └── decimation = 5 → 48 kS/s → Audio Sink
+</code></pre>
+<p>برای دریافت استریو و RDS در جلسهٔ بعد، از <strong>خروجی ۲۴۰ kS/s پس از آشکارسازی FM</strong> یک شاخهٔ مجزا به بازسازی پایلوت ۱۹ کیلوهرتز، مؤلفهٔ اختلاف کانال‌ها در ۳۸ کیلوهرتز و RDS در ۵۷ کیلوهرتز اختصاص می‌یابد. برای مسیر RDS، بعد از انتقال ۵۷ کیلوهرتز به صفر، <span class="math">\(240\to24\)</span> kS/s با کاهش نرخ ۱۰ و سپس <span class="math">\(24\to19\)</span> kS/s با بازنمونه‌برداری <span class="math">\(19/24\)</span> قابل انجام است. نرخ ۱۹ کیلوهرتز برای نرخ بیت ۱۱۸۷٫۵ بیت‌برثانیه دقیقاً <strong>۱۶ نمونه به ازای بیت</strong> ایجاد می‌کند.</p>
+<h3 id="design-32">۳-۲. فیلترهای کانال و تعداد ضرایب FIR</h3>
+<p>با پنجرهٔ همینگ طبق تقریب داده‌شده در دستور کار:</p>
+<p>$<span class="math">\(N\simeq\frac{3.3 f_s}{\Delta f_{tr}}.\)</span>$</p>
+<p>برای پیاده‌سازی یک FIR متقارن با تعداد ضرایب فرد، عدد محاسبه‌شده را در صورت نیاز به <strong>نزدیک‌ترین عدد فرد بزرگ‌تر</strong> گرد می‌کنیم.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">طراحی فیلتر کانال</th>
+<th style="text-align:right">نرخ ورودی</th>
+<th style="text-align:right">فرکانس قطع/لبهٔ باند عبور</th>
+<th style="text-align:right">عرض گذار</th>
+<th style="text-align:right">برآورد <span class="math">\(N\)</span></th>
+<th style="text-align:right">تعداد ضرایب منتخب</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>WFM</strong></td>
+<td style="text-align:right">۲٫۴ MS/s</td>
+<td style="text-align:right">۱۰۰ kHz</td>
+<td style="text-align:right">۱۵ kHz</td>
+<td style="text-align:right">۵۲۸</td>
+<td style="text-align:right"><strong>۵۲۹</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>NBFM</strong></td>
+<td style="text-align:right">۲٫۴ MS/s</td>
+<td style="text-align:right">۸ kHz</td>
+<td style="text-align:right">۴ kHz</td>
+<td style="text-align:right">۱۹۸۰</td>
+<td style="text-align:right"><strong>۱۹۸۱</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">فیلتر صوت WFM</td>
+<td style="text-align:right">۲۴۰ kS/s</td>
+<td style="text-align:right">۱۵ kHz</td>
+<td style="text-align:right">۴ kHz</td>
+<td style="text-align:right">۱۹۸</td>
+<td style="text-align:right"><strong>۱۹۹</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">فیلتر صوت NBFM</td>
+<td style="text-align:right">۲۴۰ kS/s</td>
+<td style="text-align:right">۳ kHz</td>
+<td style="text-align:right">۲ kHz</td>
+<td style="text-align:right">۳۹۶</td>
+<td style="text-align:right"><strong>۳۹۷</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>در WFM با خروجی ۲۴۰ kS/s، لبهٔ توقف تقریبی در ۱۱۵ کیلوهرتز قرار می‌گیرد و از نایکوئیست ۱۲۰ کیلوهرتز کمتر است. <strong>فیلتر باریک NBFM</strong> برای پردازش مستقیم در نرخ ۲٫۴ MS/s ضرایب بیشتری می‌طلبد؛ اجرای پلی‌فاز یا تفکیک زنجیره به دو طبقهٔ کاهش نرخ، محاسبات را اقتصادی‌تر می‌کند. برای NBFM، مرکز فیلتر باید با آفست حامل هم‌راستا شود.</p>
+<h3 id="design-33">۳-۳. ضرایب مدولاتور و تمایزگر</h3>
+<p>با <span class="math">\(f_s=240\,\mathrm{kS/s}\)</span>:</p>
+<p>$<span class="math">\(Sensitivity=k_f=\frac{2\pi\Delta f}{f_s},\qquad
+Gain_{QD}=\frac{f_s}{2\pi\Delta f}.\)</span>$</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">مد</th>
+<th style="text-align:right"><span class="math">\(\Delta f\)</span></th>
+<th style="text-align:right">Sensitivity (rad/sample)</th>
+<th style="text-align:right">Gain تمایزگر</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>NBFM</strong></td>
+<td style="text-align:right">۵ kHz</td>
+<td style="text-align:right"><strong>۰٫۱۳۰۹۰۰</strong></td>
+<td style="text-align:right"><strong>۷٫۶۳۹۴۳۷</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">WFM</td>
+<td style="text-align:right">۷۵ kHz</td>
+<td style="text-align:right">۱٫۹۶۳۴۹۵</td>
+<td style="text-align:right">۰٫۵۰۹۲۹۶</td>
+</tr>
+</tbody>
+</table></div>
+<p>در GNU Radio پارامترها به‌صورت <code>2*math.pi*dev/quad_rate</code> و <code>quad_rate/(2*math.pi*dev)</code> وارد می‌شوند. خروجی <strong>PLL Frequency Detector</strong> نیز برای قرارگیری در همان مقیاس پیام، در Gain مربوط به مد انتخابی ضرب می‌شود.</p>
+<h3 id="design-34">۳-۴. طراحی اولیهٔ حلقهٔ PLL</h3>
+<p>رابطهٔ تقریبی راهنما برای میرایی پیش‌فرض:</p>
+<p>$<span class="math">\(B_L\simeq1.06\,(Loop\ Bandwidth)\,f_s.\)</span>$</p>
+<p>برای WFM مونو، پهنای نویز حلقهٔ <span class="math">\(30\,\mathrm{kHz}\)</span> و برای NBFM، مقدار <span class="math">\(5\,\mathrm{kHz}\)</span> به‌عنوان نقاط شروع طراحی انتخاب می‌شوند. بازهٔ خروجی برآورد فرکانس هم باید بتواند انحراف واقعی پیام را در واحد <strong>رادیان بر نمونه</strong> پوشش دهد.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">پارامتر PLL</th>
+<th style="text-align:right">WFM مونو</th>
+<th style="text-align:right">NBFM (پس از تصحیح CFO)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">نرخ نمونه</td>
+<td style="text-align:right">۲۴۰ kS/s</td>
+<td style="text-align:right">۲۴۰ kS/s</td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="math">\(B_L\)</span> انتخابی</td>
+<td style="text-align:right">۳۰ kHz</td>
+<td style="text-align:right">۵ kHz</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Loop Bandwidth</strong></td>
+<td style="text-align:right"><strong>۰٫۱۱۷۹۲۵</strong></td>
+<td style="text-align:right"><strong>۰٫۰۱۹۶۵۴</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">انحراف فاز در هر نمونه، <span class="math">\(\pm k_f\)</span></td>
+<td style="text-align:right"><span class="math">\(\pm1.9635\)</span> rad</td>
+<td style="text-align:right"><span class="math">\(\pm0.1309\)</span> rad</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Min Phase/sample</strong> پیشنهادی</td>
+<td style="text-align:right"><strong>−۲٫۵ rad</strong></td>
+<td style="text-align:right"><strong>−۰٫۲۰ rad</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Max Phase/sample</strong> پیشنهادی</td>
+<td style="text-align:right"><strong>+۲٫۵ rad</strong></td>
+<td style="text-align:right"><strong>+۰٫۲۰ rad</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Gain مقیاس خروجی PLL</td>
+<td style="text-align:right">۰٫۵۰۹۲۹۶</td>
+<td style="text-align:right">۷٫۶۳۹۴۳۷</td>
+</tr>
+</tbody>
+</table></div>
+<p>در WFM بازهٔ ±۲٫۵ رادیان علاوه بر انحراف ±۷۵ کیلوهرتز مقداری حاشیه برای آفست فرکانسی باقی می‌گذارد. در NBFM، بازهٔ ±۰٫۲۰ رادیان برای سیگنالِ <strong>تصحیح‌فرکانس‌شده</strong> در نظر گرفته شده است؛ آفست ۱۳٫۰۲ کیلوهرتزی فرض‌شده باید پیش از محدودسازی کانال رفع شود.</p>
+<p>برای صدای مونو با بالاترین فرکانس ۱۵ کیلوهرتز، کران اولیهٔ پهنای حلقه از شرط تقریبی <span class="math">\(B_L\gtrsim15\,\mathrm{kHz}\)</span> برابر است با:</p>
+<p>$<span class="math">\(Loop\ Bandwidth\gtrsim\frac{15}{1.06\times240}\simeq0.059.\)</span>$</p>
+<p>این مقدار <strong>کران نظری برای شروع جست‌وجو</strong> است، نه تضمین نبود اعوجاج. مقدار ۰٫۱۱۸ (متناظر با <span class="math">\(B_L\approx30\,\mathrm{kHz}\)</span>) نقطهٔ شروع مطمئن‌تری است؛ کمترین مقدار قابل قبول با معیار کیفیت صدا و شکل موج در جلسه تعیین می‌شود. برای بازسازی کل MPX استریو، پهنای دنبال‌کردن باید با مؤلفه‌های بالاتر نیز هماهنگ شود.</p>
+<h3 id="design-35">۳-۵. بودجهٔ توان پیوند کابلی</h3>
+<p>با فرض بیشینهٔ توان خروجی اسمی <span class="math">\(+7\,\mathrm{dBm}\)</span>، تضعیف فرستنده <span class="math">\(A_{TX}\)</span>، تضعیف‌گر ثابت <span class="math">\(30\,\mathrm{dB}\)</span> و تلفات کابل <span class="math">\(0.5\,\mathrm{dB}\)</span>:</p>
+<p>$<span class="math">\(P_{RX}=7-A_{TX}-30-0.5=-23.5-A_{TX}\quad(\mathrm{dBm}).\)</span>$</p>
+<p>برای هدف <span class="math">\(P_{RX}=-60\,\mathrm{dBm}\)</span>:</p>
+<p>$<span class="math">\(\boxed{A_{TX}=7-30-0.5-(-60)=36.5\,\mathrm{dB}.}\)</span>$</p>
+<p>برای تنظیم نمونهٔ <strong>۴۰ dB</strong>، توان تخمینی دریافت برابر است با <span class="math">\(-63.5\,\mathrm{dBm}\)</span>. این مقدار <strong>۵۳٫۵ dB پایین‌تر از سقف ورودی <span class="math">\(-10\,\mathrm{dBm}\)</span></strong> است. محاسبه با توان اسمی انجام شده و پیش از روشن‌شدن TX باید اتصال کابل، وجود تضعیف‌گر و سطح مجاز ورودی بررسی شوند؛ ارسال در این آزمایش تنها از طریق کابل انجام می‌شود.</p>
+<h3>جدول ۳ — جمع‌بندی طراحی جلسهٔ اول</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">کمیت خواسته‌شده</th>
+<th style="text-align:left">مقدار طراحی</th>
+<th style="text-align:left">استدلال عددی</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">نرخ ورودی، ضرایب کاهش و نرخ صوت</td>
+<td style="text-align:left"><strong>۲٫۴ MS/s → ↓۱۰ → ۲۴۰ kS/s → ↓۵ → ۴۸ kS/s</strong></td>
+<td style="text-align:left"><span class="math">\(2.4\,\mathrm{M}/10=240\,\mathrm{k}\)</span>، <span class="math">\(240\,\mathrm{k}/5=48\,\mathrm{k}\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">فیلتر کانال WFM</td>
+<td style="text-align:left"><strong>قطع ۱۰۰ kHz؛ گذار ۱۵ kHz؛ ۵۲۹ ضریب</strong></td>
+<td style="text-align:left"><span class="math">\(N\approx3.3\times2.4M/15k=528\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">فیلتر کانال NBFM</td>
+<td style="text-align:left"><strong>قطع ۸ kHz؛ گذار ۴ kHz؛ ۱۹۸۱ ضریب</strong></td>
+<td style="text-align:left"><span class="math">\(N\approx3.3\times2.4M/4k=1980\)</span></td>
+</tr>
+<tr>
+<td style="text-align:left">Sensitivity و Gain برای <span class="math">\(\Delta f=5\,\mathrm{kHz}\)</span></td>
+<td style="text-align:left"><strong>۰٫۱۳۰۹۰۰ و ۷٫۶۳۹۴۳۷</strong></td>
+<td style="text-align:left"><span class="math">\(2\pi\times5/240\)</span> و معکوس آن</td>
+</tr>
+<tr>
+<td style="text-align:left">PLL در WFM</td>
+<td style="text-align:left"><strong>Loop BW = ۰٫۱۱۷۹۲۵؛ min/max = ±۲٫۵ rad/sample</strong></td>
+<td style="text-align:left"><span class="math">\(30/(1.06\times240)\)</span>، پوشش انحراف ±۷۵ kHz</td>
+</tr>
+<tr>
+<td style="text-align:left">PLL در NBFM</td>
+<td style="text-align:left"><strong>Loop BW = ۰٫۰۱۹۶۵۴؛ min/max = ±۰٫۲۰ rad/sample</strong></td>
+<td style="text-align:left"><span class="math">\(5/(1.06\times240)\)</span>، پس از اصلاح CFO</td>
+</tr>
+<tr>
+<td style="text-align:left">تضعیف TX برای <span class="math">\(-60\,\mathrm{dBm}\)</span></td>
+<td style="text-align:left"><strong>۳۶٫۵ dB</strong></td>
+<td style="text-align:left"><span class="math">\(7-30-0.5-(-60)\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+<h2 id="task-4">تکلیف ۴ — جدول پیش‌بینی جلسهٔ اول</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:center">ردیف</th>
+<th style="text-align:left">کمیت</th>
+<th style="text-align:left">پیش‌بینی پیش از آزمایش</th>
+<th style="text-align:left">اندازه‌گیری در جلسه</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">۱</td>
+<td style="text-align:left">دو انحراف اولِ صفرشدن حامل با <span class="math">\(f_m=1\,\mathrm{kHz}\)</span></td>
+<td style="text-align:left"><strong>۲۴۰۴٫۸۳ و ۵۵۲۰٫۰۸ Hz</strong></td>
+<td style="text-align:left">ثبت در جلسه (اختیاری)</td>
+</tr>
+<tr>
+<td style="text-align:center">۲</td>
+<td style="text-align:left">پهنای باند NBFM با <span class="math">\(\Delta f=5\,\mathrm{kHz}\)</span>، <span class="math">\(f_m=3\,\mathrm{kHz}\)</span></td>
+<td style="text-align:left"><strong>۱۶ kHz</strong></td>
+<td style="text-align:left">ثبت در جلسه (اختیاری)</td>
+</tr>
+<tr>
+<td style="text-align:center">۳</td>
+<td style="text-align:left">توان ورودی RX با تضعیف TX برابر ۴۰ dB</td>
+<td style="text-align:left"><strong>−۶۳٫۵ dBm</strong>؛ با فرض <span class="math">\(+7\,\mathrm{dBm}\)</span> TX و مجموع ۳۰٫۵ dB تلفات مسیر</td>
+<td style="text-align:left">ثبت در جلسه (اختیاری)</td>
+</tr>
+<tr>
+<td style="text-align:center">۴</td>
+<td style="text-align:left">خطای فرکانس TX و RX در فرکانس کار</td>
+<td style="text-align:left"><strong>۱۳۰۲۰ Hz</strong> برای <span class="math">\(434\,\mathrm{MHz}\)</span> و <span class="math">\(30\,\mathrm{ppm}\)</span>؛ به‌طور کلی <span class="math">\(\delta f=30\times10^{-6}f_c\)</span></td>
+<td style="text-align:left">ثبت در فرکانس واقعی تیم (اختیاری)</td>
+</tr>
+<tr>
+<td style="text-align:center">۵</td>
+<td style="text-align:left">کمترین Loop Bandwidth بدون اعوجاج محسوس برای WFM مونو</td>
+<td style="text-align:left"><strong>کران اولیه ≈۰٫۰۵۹</strong> (معادل <span class="math">\(B_L\approx15\,\mathrm{kHz}\)</span>)؛ <strong>نقطهٔ شروع تنظیم ≈۰٫۱۱۸</strong> (معادل <span class="math">\(30\,\mathrm{kHz}\)</span>)</td>
+<td style="text-align:left">کمینهٔ تجربی با شنیدن صدا و بررسی طیف تعیین می‌شود</td>
+</tr>
+</tbody>
+</table></div>
+<p>تخمین‌های ردیف‌های ۳ و ۴ بر پایهٔ مفروضات درج‌شده هستند و با سطح کالیبره‌شدهٔ فرستنده و فرکانس واقعی تیم قابل به‌روزرسانی‌اند.</p>
+<hr/>
+<h2 id="task-5">تکلیف ۵ — فهرست ریسک‌ها و پیشگیری</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align:left">ریسک محتمل</th>
+<th style="text-align:left">پیامد فنی</th>
+<th style="text-align:left">راه پیشگیری و کنترل</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>۱. ارسال با سطح توان نامناسب یا اتصال نادرست TX به RX</strong></td>
+<td style="text-align:left">ورود توان بالاتر از حد مجاز گیرنده یا انتشار ناخواستهٔ RF</td>
+<td style="text-align:left">پیش از فعال‌کردن فرستنده، مسیر <strong>TX → کابل → تضعیف‌گر ثابت ۳۰ dB → RX</strong> کنترل شود؛ آنتن به خروجی TX متصل نشود؛ بودجهٔ توان محاسبه و شرط <span class="math">\(P_{RX}\le-10\,\mathrm{dBm}\)</span> رعایت شود. تنظیم نمونهٔ ۴۰ dB برای فرستنده توان تخمینی <span class="math">\(-63.5\,\mathrm{dBm}\)</span> ایجاد می‌کند.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>۲. انتخاب نادرست نرخ نمونه، پهنای فیلتر یا Gain تمایزگر</strong></td>
+<td style="text-align:left">تداخل کانال‌های مجاور، تاخوردگی طیف، تضعیف پیام یا مقیاس غلط صوت</td>
+<td style="text-align:left">زنجیرهٔ <strong>۲٫۴M → ۲۴۰k → ۴۸k</strong> تنظیم، فرکانس‌های قطع و گذار پیش از کاهش نرخ بررسی و بهرهٔ آشکارساز از <span class="math">\(f_s/(2\pi\Delta f)\)</span> محاسبه شود. برای دو مد، پارامترها جداگانه تعریف شوند.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>۳. جبران‌نکردن آفست حامل یا تنظیم نامناسب PLL</strong></td>
+<td style="text-align:left">خروج سیگنال NBFM از فیلتر باریک، از دست‌رفتن قفل، افزایش نویز یا اعوجاج صوت</td>
+<td style="text-align:left">آفست با مشاهدهٔ طیف و تنظیم Center Frequency / Rotator <strong>پیش از فیلتر کانال</strong> اصلاح شود؛ حلقه با پهنای اولیهٔ متناسب با پیام آغاز شود؛ بازهٔ min/max و پایداری قفل بررسی و خروجی دو آشکارساز مقایسه شود.</td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+<h2 id="implementation">آمادگی برای پیاده‌سازی در GNU Radio</h2>
+<p>در جلسهٔ اول، با استفاده از <strong>QT GUI Chooser</strong> و <strong>Selector</strong> امکان جابه‌جایی میان آشکارساز ناهمدوس و PLL بدون تغییر زنجیرهٔ RF فراهم می‌شود. مقادیر اولیهٔ قابل تعریف در GRC عبارت‌اند از:</p>
+<pre><code class="language-python" dir="ltr">samp_rate = 2.4e6
+quad_rate = 240e3
+audio_rate = 48e3
+rf_decim = 10
+audio_decim = 5
+
+dev_wfm = 75e3
+dev_nbfm = 5e3
+
+sensitivity_nbfm = 2*math.pi*dev_nbfm/quad_rate   # 0.130900
+gain_nbfm = quad_rate/(2*math.pi*dev_nbfm)          # 7.639437
+sensitivity_wfm = 2*math.pi*dev_wfm/quad_rate     # 1.963495
+gain_wfm = quad_rate/(2*math.pi*dev_wfm)            # 0.509296
+
+pll_bw_wfm = 30e3/(1.06*quad_rate)  # 0.117925
+pll_bw_nbfm = 5e3/(1.06*quad_rate)  # 0.019654
+</code></pre>
+<p>در مسیر مونو پس از آشکارسازی، فیلتر صوتی متناسب با مد، واتأکید مطابق استاندارد ایستگاه و سپس نرخ ۴۸ کیلوهرتز به کار می‌رود. در ادامهٔ آزمایش، برای استریو طیف MPX با مؤلفه‌های <strong><span class="math">\(L+R\)</span> در ۰ تا ۱۵ kHz</strong>، پایلوت <strong>۱۹ kHz</strong>، مؤلفهٔ <strong><span class="math">\(L-R\)</span></strong> پیرامون <strong>۳۸ kHz</strong> و RDS پیرامون <strong>۵۷ kHz</strong> تحلیل خواهد شد. با بازیابی پایلوت و مرجع ۳۸ کیلوهرتز می‌توان کانال‌های چپ و راست را بازسازی کرد؛ در بخش داده نیز RDS با نرخ <strong>۱۱۸۷٫۵ بیت بر ثانیه</strong> تحلیل می‌شود.</p>
+<h2 id="conclusion">نتیجه‌گیری</h2>
+<p>پیش‌بینی نظری نشان می‌دهد که در WFM با انحراف <span class="math">\(75\,\mathrm{kHz}\)</span>، پهنای باند مونو حدود <span class="math">\(180\,\mathrm{kHz}\)</span> است؛ در NBFM با انحراف <span class="math">\(5\,\mathrm{kHz}\)</span> و پیام <span class="math">\(3\,\mathrm{kHz}\)</span>، پهنای باند حدود <span class="math">\(16\,\mathrm{kHz}\)</span> خواهد بود. ساختار مورد نظر با نرخ‌های <span class="math">\(2.4\,\mathrm{MS/s}\)</span>، <span class="math">\(240\,\mathrm{kS/s}\)</span> و <span class="math">\(48\,\mathrm{kS/s}\)</span> قابل پیاده‌سازی است و مقایسهٔ تمایزگر با PLL امکان مشاهدهٔ مصالحهٔ پهنای باند، نویز و کیفیت بازیابی پیام را فراهم می‌کند. در آزمایش، این پیش‌بینی‌ها با مشاهدات طیفی و اندازه‌گیری‌های واقعی ارزیابی خواهند شد.</p>
+<h2 id="references">منابع</h2>
+<ol>
+<li>J. G. Proakis and M. Salehi, <em>Communication Systems Engineering</em>, 2nd ed., Prentice Hall, 2002؛ بخش مدولاسیون زاویه و اثر نویز.</li>
+<li>M. Lichtman, <a href="https://pysdr.org/"><em>PySDR: A Guide to SDR and DSP using Python</em></a>؛ فصل End-to-End Example.</li>
+<li>ITU-R, <a href="https://www.itu.int/rec/R-REC-BS.450/en">Recommendation BS.450</a> و <a href="https://www.itu.int/rec/R-REC-BS.643/en">Recommendation BS.643</a>؛ استانداردهای FM و RDS.</li>
+<li>B. Bloessl, <a href="https://github.com/bastibl/gr-rds">gr-rds</a>؛ ماژول‌های پردازش RDS در GNU Radio.</li>
+<li><a href="https://wiki.gnuradio.org/">GNU Radio Wiki</a>؛ راهنمای بلوک‌ها و پارامترهای GNU Radio 3.10.</li>
+<li>ITU-R, <a href="https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.412-9-199812-I!!PDF-E.pdf">BS.412-9</a>؛ استاندارد برنامه‌ریزی و شبکهٔ فرکانسی FM در باند VHF.</li>
+<li><strong>راهنمای پیش از جلسهٔ FM، استریو و RDS</strong>، فایل <code>prelab_03_fm.pdf</code>، صفحات ۱ تا ۸؛ منبع اصلی تکالیف و مقادیر پایهٔ این گزارش.</li>
+</ol>
+
+ </main>
+</div>
+<div class="footer">آزمایشگاه رادیوی نرم‌افزار · پیش‌گزارش FM، Stereo و RDS</div>
+</body>
+</html>

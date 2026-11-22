@@ -1,0 +1,15 @@
+﻿quantity,value,unit,source
+broadcast_fc_hz,90000000,Hz,Part1_f_finetune.png
+carrier_offset_hz,1276.110229,Hz,Part1_freq_offset.png
+fine_tuning_hz,-1350,Hz,Part1_f_finetune.png
+broadcast_Pon,-70.692451,dBFS,Part1_channelPower.png
+broadcast_Poff_adjacent,-72.003181,dBFS,Part1_emptyChannel_channelpower.png
+tx_fc_hz,434000000,Hz,Part3_3_tx.png
+tx_atten_db,70,dB,Part3_3_tx.png
+tx_digital_amplitude,0.5,relative,Part3_7_fm=1000_dev=5000_tx.png
+tx_tone_amplitude,1.0,relative,Part3_3_tx.png
+cable_Poff,-78.250565,dBFS,Part3_3_rxPower.png
+cable_Pon,-47.432655,dBFS,Part3_5.png
+cable_SINAD,34.196014,dB,Part3_5.png
+cable_fine_hz,2,Hz,Part3_4_rxsettings.png
+cable_rx_dev_hz,75000,Hz,Part3_4_rxsettings.png

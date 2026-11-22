@@ -1,0 +1,11 @@
+{
+  "note_fa": "مسیرها نسبت به پوشه post هستند. نام اصلی ضبط حفظ شود. path را با مسیر فایل واقعی پر کنید و تنظیمات همان ضبط را وارد کنید. مقدار null یعنی جای رزرو.",
+  "captures": [
+    {"id":"station_90mhz","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":90000000,"dev_hz":75000,"rf_gain_db":40,"analysis_band_hz":[-100000,100000],"audio_bw_hz":15000,"tau_us":75},
+    {"id":"gain40","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":90000000,"dev_hz":null,"rf_gain_db":40,"analysis_band_hz":[-100000,100000],"audio_bw_hz":15000,"tau_us":75},
+    {"id":"gain27","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":90000000,"dev_hz":null,"rf_gain_db":27,"analysis_band_hz":[-100000,100000],"audio_bw_hz":15000,"tau_us":75},
+    {"id":"gain20","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":90000000,"dev_hz":null,"rf_gain_db":20,"analysis_band_hz":[-100000,100000],"audio_bw_hz":15000,"tau_us":75},
+    {"id":"tone1k_dev5k","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":434000000,"dev_hz":5000,"rf_gain_db":null,"analysis_band_hz":[-30000,30000],"audio_bw_hz":3000,"tau_us":75},
+    {"id":"tone3k_dev5k","path":null,"format":"cf32_le","fs_hz":240000,"fc_hz":434000000,"dev_hz":5000,"rf_gain_db":null,"analysis_band_hz":[-30000,30000],"audio_bw_hz":15000,"tau_us":75}
+  ]
+}
