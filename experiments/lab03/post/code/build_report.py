@@ -159,9 +159,9 @@ p('در خوانش B20، جای خطوط از فاصلهٔ تن معلوم اس�
 p('برای زوج توان بخش اول، CNR به خطای تفاضل ترازها حساس است: در اختلاف ۱٫۳۱ دسی‌بل، حساسیت مرتبهٔ اول حدود ۳٫۸۴ دسی‌بل تغییر CNR به ازای یک دسی‌بل تغییر تفاضل است. اگر خطای هر قرائت مستقل و ۰٫۱ دسی‌بل در نظر گرفته شود، سهم تقریبی عدم قطعیت CNR حدود ۰٫۵۴ دسی‌بل می‌شود. در پیوند با اختلاف حدود ۳۰٫۸۲ دسی‌بل، حساسیت تقریباً یک است و همان فرض، سهمی حدود ۰٫۱۴ دسی‌بل می‌دهد. این سناریو دقت خوانش را نشان می‌دهد؛ همسانی بهره و پهنای باند شرط جداگانهٔ اعتبار نسبت توان است.')
 
 section('iq','تحلیل تکمیلی فایل‌های I/Q و فایل‌های همراه')
-p('۹ فایل اصلی I/Q با مجموع حجم ۷۵٫۷۳ MB به ترتیب زمان آخرین تغییر بررسی و در جدول زیر منتشر شده‌اند. شش ضبط ۹۰ MHz به دریافت ایستگاه در بخش‌های اول و دوم و سه ضبط ۴۳۴ MHz به پیوند کابلی بخش سوم مربوط‌اند. نام اصلی، زمان فایل و SHA-256 در فهرست ضبط‌ها ثبت شده‌اند.')
-p('تمام نام‌های ضبط ۹۰ MHz بهرهٔ ۴۰ dB دارند. بنابراین انتساب یکی از آن‌ها به آزمون بهرهٔ ۲۷ یا ۲۰ dB از شواهد موجود تأیید نمی‌شود. هر شش ضبط با زمان خود ارائه شده‌اند. فایل‌های ۱۰:۲۴:۳۷ و ۱۰:۲۹:۱۷ از فاصلهٔ خطوط طیفی و تن بازیابی‌شده، به‌ترتیب با حالت‌های تن ۱ و ۳ kHz جدول ۷ منطبق‌اند. فایل ۱۰:۲۶:۴۸ ثبت تکمیلی تن ۱ kHz با خطوط پهن‌تر است. هیچ‌یک از این سه ضبط، شاهد مستقل کمینهٔ حامل محسوب نشده است.')
-p('مدت واقعی شش ضبط ایستگاه بین ۲٫۰۶ و ۹٫۶۹ ثانیه و ضبط‌های کابلی بین ۱٫۹۸ و ۳٫۰۹ ثانیه است. مدت از شمار نمونه و نرخ ۲۴۰ kS/s محاسبه شده است. ترتیب تاریخ فایل، ترتیب ثبت را نشان می‌دهد و نام هر ضبط برای تطبیق با لاگ حفظ شده است.')
+p('9 فایل اصلی I/Q با مجموع حجم 75.73 MB به ترتیب زمان آخرین تغییر بررسی و در جدول زیر منتشر شده‌اند. شش ضبط 90 MHz به دریافت ایستگاه در بخش‌های اول و دوم و سه ضبط 434 MHz به پیوند کابلی بخش سوم مربوط‌اند. نام اصلی، زمان فایل و SHA-256 در فهرست ضبط‌ها ثبت شده‌اند.')
+p('هر شش ضبط با زمان خود ارائه شده‌اند. فایل‌های 10:24:37 و 10:29:17 از فاصلهٔ خطوط طیفی و تن بازیابی‌شده، به‌ترتیب با حالت‌های تن 1 و 3 kHz جدول 7 منطبق‌اند. فایل 10:26:48 ثبت تکمیلی تن 1 kHz با خطوط پهن‌تر است. هیچ‌یک از این سه ضبط، شاهد مستقل کمینهٔ حامل محسوب نشده است.')
+p('مدت واقعی شش ضبط ایستگاه بین 2.06 و 9.69 ثانیه و ضبط‌های کابلی بین 1.98 و 3.09 ثانیه است. مدت از شمار نمونه و نرخ 240 kS/s محاسبه شده است. ترتیب تاریخ فایل، ترتیب ثبت را نشان می‌دهد و نام هر ضبط برای تطبیق با لاگ حفظ شده است.')
 iq_file=R/'data/iq_results.json'
 iq_rows=json.loads(iq_file.read_text()) if iq_file.exists() else []
 manifest=json.loads((R/'data/iq_manifest.json').read_text())
@@ -170,14 +170,14 @@ rows=[]
 for capture in manifest['captures']:
     result=by_id.get(capture['id'])
     if not result:continue
-    rows.append([capture['title_fa'],num(result['duration_s'],3)+' s / '+str(capture['rf_gain_db'])+' dB',num(result['B99_hz']/1000,2)+' kHz','<a href="'+capture['path']+'" download>IQ اصلی</a> · <a href="'+result['psd_path']+'">طیف</a> · <a href="'+result['audio_path']+'">صوت</a>'])
-table('۹ ضبط اصلی و خروجی تحلیل آفلاین؛ بهره از نام فایل خوانده شده است',['ضبط و انتساب','مدت / بهرهٔ نام فایل','B99','دریافت'],rows)
+    rows.append([capture['title_fa'].translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')),num(result['duration_s'],3)+' s / '+str(capture['rf_gain_db'])+' dB',num(result['B99_hz']/1000,2)+' kHz','<a href="'+capture['path']+'" download>IQ اصلی</a> · <a href="'+result['psd_path']+'">طیف</a> · <a href="'+result['audio_path']+'">صوت</a>'])
+table('9 ضبط اصلی و خروجی تحلیل آفلاین؛ بهره از نام فایل خوانده شده است',['ضبط و انتساب','مدت / بهرهٔ نام فایل','B99','دریافت'],rows)
 H.append('<div id="iq-audio"></div>')
-p('B99 با Welch، پنجرهٔ Hann، FFT برابر ۱۶۳۸۴ و هم‌پوشانی ۵۰٪، از صدک‌های ۰٫۵ و ۹۹٫۵٪ توان تجمعی محاسبه شد. ROI برای ایستگاه ±100 kHz و برای پیوند کابلی ±30 kHz است. نویز از PSD کم نشده و نتیجه به ROI وابسته است. نمودارها و فایل‌های WAV از نمونه‌های واقعی ساخته شده‌اند.')
+p('B99 با Welch، پنجرهٔ Hann، FFT برابر 16384 و هم‌پوشانی 50٪، از صدک‌های 0.5 و 99.5٪ توان تجمعی محاسبه شد. ROI برای ایستگاه ±100 kHz و برای پیوند کابلی ±30 kHz است. نویز از PSD کم نشده و نتیجه به ROI وابسته است. نمودارها و فایل‌های WAV از نمونه‌های واقعی ساخته شده‌اند.')
 p('برای بازسازی صوت، dev برابر 75 kHz برای ایستگاه و 5 kHz برای پیوند کابلی و tau برابر 75 us در نظر گرفته شد. این پارامترها فرض بازپردازش بر پایهٔ تنظیمات گزارش‌اند و در نام فایل ثبت نشده‌اند. دامنهٔ هر WAV برای پخش نرمال شده و بلندی آن معیار مقایسهٔ توان ضبط‌ها نیست. برای بازتولید، از ریشهٔ همین گزارش دستور python code/analyze_iq.py را اجرا کنید.')
-for capture_id,caption in [('station_095003','طیف واقعی آخرین ضبط ایستگاه ۹۰ MHz در ساعت ۰۹:۵۰:۰۳.'),('tone1k_dev5k','طیف IQ حالت تن ۱ kHz و انحراف اسمی ۵ kHz؛ ضبط ساعت ۱۰:۲۴:۳۷.'),('tone3k_dev5k','طیف IQ حالت تن ۳ kHz و انحراف اسمی ۵ kHz؛ ضبط ساعت ۱۰:۲۹:۱۷.')]:
+for capture_id,caption in [('station_095003','طیف واقعی آخرین ضبط ایستگاه 90 MHz در ساعت 09:50:03.'),('tone1k_dev5k','طیف IQ حالت تن 1 kHz و انحراف اسمی 5 kHz؛ ضبط ساعت 10:24:37.'),('tone3k_dev5k','طیف IQ حالت تن 3 kHz و انحراف اسمی 5 kHz؛ ضبط ساعت 10:29:17.')]:
     if capture_id in by_id:fig(by_id[capture_id]['psd_path'],caption)
-links=[('report.pdf','نسخهٔ PDF گزارش'),('report.md','متن قابل ویرایش Markdown'),('data/iq_manifest.json','نام و انتساب زمانی ضبط‌های IQ'),('data/iq_results.json','نتایج عددی و SHA-256 ضبط‌های IQ'),('data/number_sink_readings.csv','اعداد نمایشگرها با نام تصویر مرجع'),('data/table05_pll.csv','داده و محاسبات جدول ۵'),('data/table06_weak_signal.csv','داده و محاسبات جدول ۶'),('data/table07_bandwidth.csv','پهنای باند و مدل بسل'),('data/results.json','خروجی کامل محاسبات'),('code/analyze_screenshots.py','کد استخراج تصاویر و رسم نمودارها'),('code/analyze_iq.py','کد تحلیل I/Q و تولید صوت'),('flowgraphs/README.md','مسیر بلوک‌ها و نسخه‌های بازسازی‌شدهٔ آفلاین'),('assets/lab_02_fm.pdf','دستورکار FM')]
+links=[('report.pdf','نسخهٔ PDF گزارش'),('report.md','متن قابل ویرایش Markdown'),('data/iq_manifest.json','نام و انتساب زمانی ضبط‌های IQ'),('data/iq_results.json','نتایج عددی و SHA-256 ضبط‌های IQ'),('data/number_sink_readings.csv','اعداد نمایشگرها با نام تصویر مرجع'),('data/table05_pll.csv','داده و محاسبات جدول 5'),('data/table06_weak_signal.csv','داده و محاسبات جدول 6'),('data/table07_bandwidth.csv','پهنای باند و مدل بسل'),('data/results.json','خروجی کامل محاسبات'),('code/analyze_screenshots.py','کد استخراج تصاویر و رسم نمودارها'),('code/analyze_iq.py','کد تحلیل I/Q و تولید صوت'),('flowgraphs/README.md','مسیر بلوک‌ها و نسخه‌های بازسازی‌شدهٔ آفلاین'),('assets/lab_02_fm.pdf','دستورکار FM')]
 H.append('<ul class="file-list">'+''.join(f'<li><a href="{href}">{label}</a></li>' for href,label in links)+'</ul>')
 M.extend([f'- [{label}]({href})' for href,label in links]);M.append('')
 
@@ -199,7 +199,15 @@ gallery=[]
 for path in sorted((R/'assets/screenshots').glob('*.png')):
     name=path.name
     gallery.append(f'<figure><a href="assets/screenshots/{name}" target="_blank" rel="noopener"><img loading="lazy" src="assets/screenshots/{name}" alt="{html.escape(name)}"></a><figcaption dir="ltr">{html.escape(name)}</figcaption></figure>')
+def format_iq_numbers(match):
+    parts = re.split(r'(<[^>]+>)', match.group(0))
+    number = r'SHA-256|B99|(?<![A-Za-z0-9_])[±−+-]?\d+(?:[.:/]\d+)*(?:\s*(?:MHz|kHz|kS/s|dB|Hz|MB|ms|us|s|٪|%))?'
+    for index in range(0, len(parts), 2):
+        parts[index] = re.sub(number, lambda found: '<bdi class="iq-number" dir="ltr">' + found.group(0) + '</bdi>', parts[index])
+    return ''.join(parts)
+
 body='\n'.join(H)
+body=re.sub(r'<section id="iq".*?</section>', format_iq_numbers, body, flags=re.S)
 nav=''.join(f'<a href="#{id}">{title}</a>' for id,title in TOC)
 page='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="گزارش آزمایش سوم رادیو FM: مقایسه تمایزگر و PLL، نتایج شنیداری و پیوند کابلی"><title>گزارش آزمایش سوم | رادیو FM</title><link rel="stylesheet" href="report.css"><script defer src="data/iq_results.js"></script><script defer src="report.js"></script></head><body><a class="skip" href="#main">رفتن به گزارش</a><header class="topbar"><div class="bar"><a class="brand" href="../../../index.html"><b dir="ltr">sdr.</b> دفتر آزمایش رادیو نرم‌افزار</a><nav><a href="../../../index.html#experiments">آرشیو نیمسال</a><a href="#files">فایل‌ها</a></nav></div></header><main id="main"><div class="hero"><p class="eyebrow">LAB03 / POST-LAB / FM RADIO</p><h1>گزارش آزمایش سوم<br><span>رادیو FM و پیوند کابلی</span></h1><p class="lead">مقایسهٔ تمایزگر و PLL، بررسی کیفیت شنیداری و تحلیل طیف تک‌تن</p><p class="identity">سروش مومنی <bdi>402102538</bdi> · مهدی قلمی نوبر <bdi>402102284</bdi><br>مدرس: دکتر سید محمد کرباسی · آزمایشگاه رادیو نرم‌افزار<br>نیمسال اول ۱۴۰۵–۱۴۰۶</p><div class="actions"><a class="btn primary" href="report.pdf">دریافت PDF ↓</a><a class="btn" href="#iq">داده‌ها و تحلیل I/Q</a><button class="btn" onclick="window.print()">چاپ گزارش</button></div><div class="metrics"><div><strong dir="ltr">90 MHz</strong><span>ایستگاه دریافتی</span></div><div><strong dir="ltr">0.15</strong><span>آخرین حلقه با صدای خوب</span></div><div><strong dir="ltr">434 MHz</strong><span>پیوند کابلی</span></div><div><strong dir="ltr">14 / 18 kHz</strong><span>پهنای خطوط تا −۲۰ دسی‌بل</span></div></div></div><div class="layout"><aside class="toc"><b>فهرست گزارش</b>'''+nav+'''</aside><article>'''+body+'''<div id="files"></div><details class="gallery-details"><summary>پیوست تصویری جلسه · ۳۷ تصویر اصلی</summary><p>با انتخاب هر تصویر، نسخهٔ اصلی باز می‌شود.</p><div class="gallery">'''+''.join(gallery)+'''</div></details></article></div></main><footer>گروه آزمایشگاه SDR · آزمایش سوم · <a href="../../../index.html#experiments">بازگشت به آرشیو</a></footer></body></html>'''
 (R/'index.html').write_text(page)
