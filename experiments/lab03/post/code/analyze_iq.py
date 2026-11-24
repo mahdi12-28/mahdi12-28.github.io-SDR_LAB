@@ -91,7 +91,10 @@ def main():
             if not np.array_equal(fn,f):raise ValueError('Signal/noise PSD grids differ')
         clean=np.maximum(p-pn,0) if pn is not None else p
         lo,hi,bw=occupied_bw(f,clean,band)
-        row={'id':c['id'],'path':c['path'],'n_samples':len(x),'duration_s':len(x)/fs,
+        row={'id':c['id'],'title_fa':c.get('title_fa',c['id']),
+             'association_fa':c.get('association_fa',''),
+             'processing_assumptions_fa':c.get('processing_assumptions_fa',''),
+             'path':c['path'],'n_samples':len(x),'duration_s':len(x)/fs,
              'fs_hz':fs,'rf_gain_db':c.get('rf_gain_db'),'dev_hz':c['dev_hz'],
              'analysis_band_hz':band,'B99_hz':bw,'f_low_hz':lo,'f_high_hz':hi,
              'noise_subtracted':pn is not None,'sha256':hashlib.file_digest(path.open('rb'),'sha256').hexdigest()}
